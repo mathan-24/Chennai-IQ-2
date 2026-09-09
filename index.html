@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ROUTE-IQ | Real-Time Disruption Monitoring & Safe Routing</title>
-  <meta name="description" content="Operational coordination and decision-support platform for critical logistics in disaster-prone regions." />
+  <title>ROUTE-IQ | CHENNAI-IQ: AI-Assisted Flood Access Risk Mapping & Dynamic Routing for Chennai</title>
+  <meta name="description" content="CHENNAI-IQ: AI-Assisted Flood Access Risk Mapping & Dynamic Routing for Chennai" />
+  <meta property="og:title" content="ROUTE-IQ | CHENNAI-IQ: AI-Assisted Flood Access Risk Mapping & Dynamic Routing for Chennai" />
+  <meta property="og:description" content="CHENNAI-IQ: AI-Assisted Flood Access Risk Mapping & Dynamic Routing for Chennai" />
 
   <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -43,11 +45,11 @@
           <div class="hero-status-pill">
             <span class="live-status-dot"></span>
             <span class="data-mono" style="font-size: 11px; letter-spacing: 0.1em; color: #00CED1;">
-              ONLINE · CORRIDOR MESH
+              CHENNAI METRO · FLOOD SENSOR MESH
             </span>
           </div>
           <span class="data-mono" style="font-size: 11px; color: rgba(255, 255, 255, 0.4);">
-            32.7266° N, 74.8570° E
+            13.0827° N, 80.2707° E
           </span>
         </div>
 
@@ -55,25 +57,25 @@
         <div class="hero-brand-center">
           <div class="hero-logo-box">
             <span class="material-symbols-outlined" style="font-size: 40px; color: #00CED1; font-variation-settings: 'FILL' 1;">
-              alt_route
+              flood
             </span>
           </div>
 
           <h1 class="hero-title font-display">
-            ROUTE<span style="color: #00CED1;">-IQ</span>
+            CHENNAI<span style="color: #00CED1;">-IQ</span>
           </h1>
 
           <div class="hero-subtag">
-            TACTICAL CORRIDOR INTELLIGENCE
+            AI-ASSISTED FLOOD ACCESS RISK MAPPING & DYNAMIC ROUTING
           </div>
         </div>
 
         <div class="hero-bottom-bar">
           <span class="data-mono" style="font-size: 11px; color: rgba(255, 255, 255, 0.35); letter-spacing: 0.08em;">
-            SECTOR NORTH · ACTIVE TELEMETRY
+            GREATER CHENNAI CORPORATION · DISASTER LOGISTICS
           </span>
           <span class="data-mono" style="font-size: 11px; color: #00CED1; letter-spacing: 0.08em;">
-            SYS.VER 2.6.4
+            SYS.VER 3.1.0
           </span>
         </div>
       </div>
@@ -111,7 +113,7 @@
             <div class="input-group">
               <div style="display: flex; justify-content: space-between; align-items: center;">
                 <label class="label-caps" for="login-password">PASSWORD</label>
-                <a href="#" onclick="event.preventDefault(); alert('Please contact Control Room Dispatcher (CR-01) for password reset.');" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #00CED1; text-decoration: none;">Forgot password?</a>
+                <a href="#" onclick="event.preventDefault(); window.RouteIQ ? window.RouteIQ.showForgotInfo() : alert('Please contact Control Room Dispatcher (CR-01) for credential recovery.');" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #00CED1; text-decoration: none;">Forgot password?</a>
               </div>
               <div class="input-field-wrapper" style="margin-top: 4px;">
                 <span class="material-symbols-outlined input-icon">lock</span>
@@ -227,9 +229,13 @@
             </div>
           </div>
 
-          <button type="submit" class="btn-primary" style="margin-top: 8px; width: 100%;">
-            VERIFY & CONTINUE
+          <button type="submit" id="btn-verify-driver" class="btn-primary" style="margin-top: 8px; width: 100%; padding: 14px;">
+            VERIFY & CONTINUE <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
           </button>
+
+          <a href="#" onclick="event.preventDefault(); window.RouteIQ ? window.RouteIQ.backToLogin() : null;" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); text-align: center; text-decoration: none; margin-top: 4px; display: inline-block;">
+            ← Switch Account / Back to Sign In
+          </a>
 
           <div style="margin-top: 14px; display: flex; align-items: center; justify-content: center; gap: 6px; color: var(--text-muted);">
             <span class="material-symbols-outlined" style="font-size: 14px;">lock</span>
@@ -259,9 +265,13 @@
             </div>
           </div>
 
-          <button type="submit" class="btn-primary" style="margin-top: 8px; width: 100%;">
-            VERIFY & CONTINUE
+          <button type="submit" id="btn-verify-officer" class="btn-primary" style="margin-top: 8px; width: 100%; padding: 14px;">
+            VERIFY & CONTINUE <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
           </button>
+
+          <a href="#" onclick="event.preventDefault(); window.RouteIQ ? window.RouteIQ.backToLogin() : null;" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); text-align: center; text-decoration: none; margin-top: 4px; display: inline-block;">
+            ← Switch Account / Back to Sign In
+          </a>
 
           <div style="margin-top: 14px; display: flex; align-items: center; justify-content: center; gap: 6px; color: var(--text-muted);">
             <span class="material-symbols-outlined" style="font-size: 14px;">lock</span>
@@ -291,9 +301,13 @@
             </div>
           </div>
 
-          <button type="submit" class="btn-primary" style="margin-top: 8px; width: 100%;">
-            VERIFY & CONTINUE
+          <button type="submit" id="btn-verify-control" class="btn-primary" style="margin-top: 8px; width: 100%; padding: 14px;">
+            VERIFY & CONTINUE <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
           </button>
+
+          <a href="#" onclick="event.preventDefault(); window.RouteIQ ? window.RouteIQ.backToLogin() : null;" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); text-align: center; text-decoration: none; margin-top: 4px; display: inline-block;">
+            ← Switch Account / Back to Sign In
+          </a>
 
           <div style="margin-top: 14px; display: flex; align-items: center; justify-content: center; gap: 6px; color: var(--text-muted);">
             <span class="material-symbols-outlined" style="font-size: 14px;">lock</span>
@@ -603,36 +617,42 @@
             <span class="material-symbols-outlined">dashboard</span> Overview
           </a>
           <a href="#" class="nav-item" data-tab="tab-incidents">
-            <span class="material-symbols-outlined">warning</span> Incidents
+            <span class="material-symbols-outlined">alt_route</span> Road Segments
+          </a>
+          <a href="#" class="nav-item" data-tab="tab-tasks">
+            <span class="material-symbols-outlined">assignment</span> Inspection Tasks
+          </a>
+          <a href="#" class="nav-item" data-tab="tab-exceptions">
+            <span class="material-symbols-outlined">rule</span> Exception Queue
           </a>
           <a href="#" class="nav-item" data-tab="tab-vehicles">
-            <span class="material-symbols-outlined">local_shipping</span> Vehicles
+            <span class="material-symbols-outlined">local_shipping</span> Fleets
           </a>
           <a href="#" class="nav-item" data-tab="tab-routes">
-            <span class="material-symbols-outlined">route</span> Route Intelligence
+            <span class="material-symbols-outlined">route</span> Candidate Routes
           </a>
           <a href="#" class="nav-item" data-tab="tab-deliveries">
             <span class="material-symbols-outlined">medical_services</span> Deliveries
           </a>
           <a href="#" class="nav-item" data-tab="tab-alerts">
-            <span class="material-symbols-outlined">notifications</span> Alerts
+            <span class="material-symbols-outlined">notifications</span> Driver Alerts
           </a>
           <a href="#" class="nav-item" data-tab="tab-audit">
             <span class="material-symbols-outlined">history</span> Audit Trail
           </a>
           <a href="#" class="nav-item" data-tab="tab-settings">
-            <span class="material-symbols-outlined">settings</span> Settings
+            <span class="material-symbols-outlined">tune</span> Risk Engine
           </a>
         </div>
 
         <div style="padding: 16px 20px; border-top: 1px solid var(--border-outline); display: flex; align-items: center; justify-content: space-between;">
           <div style="display: flex; align-items: center; gap: 10px;">
             <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--bg-surface-high); border: 1px solid var(--border-outline); display: flex; align-items: center; justify-content: center; color: var(--color-primary);">
-              <span class="material-symbols-outlined" style="font-size: 18px;">person</span>
+              <span class="material-symbols-outlined" style="font-size: 18px;">admin_panel_settings</span>
             </div>
             <div>
               <div class="data-mono" style="font-size: 12px; color: #FFF; font-weight: bold;">CR-01</div>
-              <div style="font-size: 10px; color: var(--text-muted); text-transform: uppercase;">Command Officer</div>
+              <div style="font-size: 10px; color: var(--text-muted); text-transform: uppercase;">Chennai Command</div>
             </div>
           </div>
           <button class="btn-icon" onclick="window.RouteIQ.logout()" title="Logout">
@@ -647,15 +667,18 @@
         <!-- Top App Bar -->
         <header class="cr-topbar">
           <div style="display: flex; align-items: center; gap: 16px;">
-            <h2 class="font-display" style="font-size: 18px; color: #FFF;">Regional Sector North Overview</h2>
-            <div class="badge-status badge-verified">
+            <h2 class="font-display" style="font-size: 18px; color: #FFF;">Chennai Metropolitan Flood Access Command</h2>
+            <div class="badge-status badge-verified" id="cr-rainfall-badge">
               <span class="pulse-circle" style="width: 6px; height: 6px;"></span>
-              SYSTEM OPERATIONAL
+              75 mm (SIMULATION MODE)
             </div>
           </div>
 
-          <div style="display: flex; align-items: center; gap: 16px;">
-            <span class="data-mono" style="color: var(--text-on-surface-variant); font-size: 12px;">14:35:22 UTC</span>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <button id="btn-run-full-scenario" class="btn-primary" style="padding: 6px 14px; font-size: 11px; background: linear-gradient(135deg, #00CED1 0%, #008B8B 100%);">
+              <span class="material-symbols-outlined" style="font-size: 15px;">play_arrow</span> RUN END-TO-END DEMO
+            </button>
+            <span class="data-mono" style="color: var(--text-on-surface-variant); font-size: 12px;">16:00 IST</span>
             <button class="btn-icon" onclick="window.RouteIQ.switchCRTab('tab-alerts')">
               <span class="material-symbols-outlined" style="font-size: 18px;">notifications</span>
             </button>
@@ -669,62 +692,92 @@
         <div class="cr-content-scroll">
           
           <!-- ================= TAB: OVERVIEW (Screen 8 & 9) ================= -->
-          <div id="tab-overview" class="cr-tab-pane" style="display: flex; flex-direction: column; gap: 20px;">
+          <div id="tab-overview" class="cr-tab-pane" style="display: flex; flex-direction: column; gap: 18px;">
             
+            <!-- Rainfall Simulator & Interactive Trigger Bar -->
+            <div class="glass-panel" style="padding: 16px 20px; border: 1px solid rgba(0, 206, 209, 0.4); background: linear-gradient(135deg, rgba(0, 206, 209, 0.08) 0%, rgba(22, 29, 29, 0.9) 100%);">
+              <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+                <div>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="material-symbols-outlined" style="color: #00CED1; font-size: 20px;">water_drop</span>
+                    <span class="label-caps" style="color: #00CED1; letter-spacing: 0.08em;">NORTHEAST MONSOON RAINFALL SIMULATOR</span>
+                  </div>
+                  <div style="font-size: 12px; color: var(--text-on-surface-variant); margin-top: 3px;">
+                    Slide or select precipitation to dynamically test citywide risk recalculation, automated task dispatch, and driver rerouting.
+                  </div>
+                </div>
+
+                <!-- Live Slider & Presets -->
+                <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <input type="range" id="cr-rainfall-slider" min="10" max="250" step="5" value="75" style="width: 140px; cursor: pointer; accent-color: #00CED1;" />
+                    <span id="cr-rainfall-val-display" class="data-mono" style="color: #FFF; font-weight: bold; font-size: 14px; min-width: 65px;">75 mm</span>
+                  </div>
+
+                  <div style="display: flex; gap: 6px;">
+                    <button type="button" class="btn-secondary btn-rain-preset" data-rain="75" style="padding: 4px 10px; font-size: 10px;">75mm (Normal)</button>
+                    <button type="button" class="btn-secondary btn-rain-preset" data-rain="120" style="padding: 4px 10px; font-size: 10px;">120mm (Heavy)</button>
+                    <button type="button" class="btn-secondary btn-rain-preset" data-rain="150" style="padding: 4px 10px; font-size: 10px; border-color: #FFA54A; color: #FFA54A;">150mm (Severe)</button>
+                    <button type="button" class="btn-secondary btn-rain-preset" data-rain="220" style="padding: 4px 10px; font-size: 10px; border-color: #FF3B30; color: #FF3B30;">220mm (Extreme)</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <!-- 5-Card KPI Strip -->
             <div class="kpi-strip">
               <!-- KPI 1 -->
-              <div class="glass-panel kpi-card interactive-glow">
+              <div class="glass-panel kpi-card interactive-glow" onclick="window.RouteIQ.switchCRTab('tab-incidents')" style="cursor: pointer;">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                  <span class="label-caps">ACTIVE INCIDENTS</span>
+                  <span class="label-caps">HIGH/CRITICAL SEGMENTS</span>
                   <span class="material-symbols-outlined" style="color: var(--color-critical); font-size: 20px;">warning</span>
                 </div>
-                <div class="kpi-value" id="kpi-active-incidents" style="color: var(--color-critical);">3</div>
+                <div class="kpi-value" id="kpi-active-incidents" style="color: var(--color-critical);">1</div>
                 <div style="font-size: 11px; color: var(--text-on-surface-variant);">
-                  <strong style="color: var(--color-critical);">1 CRITICAL</strong> · 2 HIGH
+                  Real-time flood risk calculation
                 </div>
               </div>
 
               <!-- KPI 2 -->
-              <div class="glass-panel kpi-card interactive-glow">
+              <div class="glass-panel kpi-card interactive-glow" onclick="window.RouteIQ.switchCRTab('tab-vehicles')" style="cursor: pointer;">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                  <span class="label-caps">AFFECTED VEHICLES</span>
+                  <span class="label-caps">AFFECTED TRIPS</span>
                   <span class="material-symbols-outlined" style="color: var(--color-warning); font-size: 20px;">local_shipping</span>
                 </div>
-                <div class="kpi-value" style="color: var(--color-warning);">8</div>
-                <div style="font-size: 11px; color: var(--text-on-surface-variant);">5 Active · 3 Delayed</div>
+                <div class="kpi-value" id="kpi-affected-vehicles" style="color: var(--color-warning);">1</div>
+                <div style="font-size: 11px; color: var(--text-on-surface-variant);">Targeted driver alerts enabled</div>
               </div>
 
               <!-- KPI 3 -->
-              <div class="glass-panel kpi-card interactive-glow" style="border-color: rgba(0, 206, 209, 0.4);">
+              <div class="glass-panel kpi-card interactive-glow" onclick="window.RouteIQ.switchCRTab('tab-deliveries')" style="cursor: pointer; border-color: rgba(0, 206, 209, 0.4);">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                  <span class="label-caps">CRITICAL DELIVERIES</span>
+                  <span class="label-caps">CRITICAL VACCINES</span>
                   <span class="material-symbols-outlined" style="color: var(--color-primary-bright); font-size: 20px;">medical_services</span>
                 </div>
                 <div class="kpi-value" style="color: var(--color-primary-bright);">2</div>
                 <div style="font-size: 11px; color: var(--text-on-surface-variant);">
-                  <strong style="color: var(--color-primary-bright);">1 At Risk</strong> · 1 Delayed
+                  <strong style="color: #38E54D;">+4.1°C</strong> Cold chain secure
                 </div>
               </div>
 
               <!-- KPI 4 -->
-              <div class="glass-panel kpi-card interactive-glow">
+              <div class="glass-panel kpi-card interactive-glow" onclick="window.RouteIQ.switchCRTab('tab-routes')" style="cursor: pointer;">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                  <span class="label-caps">ROUTES IMPACTED</span>
-                  <span class="material-symbols-outlined" style="color: var(--text-on-surface-variant); font-size: 20px;">alt_route</span>
+                  <span class="label-caps">RECOMMENDED ROUTE</span>
+                  <span class="material-symbols-outlined" style="color: #00CED1; font-size: 20px;">alt_route</span>
                 </div>
-                <div class="kpi-value" style="color: #FFF;">4</div>
-                <div style="font-size: 11px; color: var(--text-on-surface-variant);">2 Blocked · 2 Restricted</div>
+                <div class="kpi-value" style="color: #00CED1;">Route B</div>
+                <div style="font-size: 11px; color: var(--text-on-surface-variant);">GST / Kathipara Elevated Flyover</div>
               </div>
 
               <!-- KPI 5 -->
-              <div class="glass-panel kpi-card interactive-glow">
+              <div class="glass-panel kpi-card interactive-glow" onclick="window.RouteIQ.switchCRTab('tab-exceptions')" style="cursor: pointer;">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                  <span class="label-caps">PENDING VERIFICATION</span>
+                  <span class="label-caps">PENDING REVIEWS</span>
                   <span class="material-symbols-outlined" style="color: var(--text-muted); font-size: 20px;">pending_actions</span>
                 </div>
-                <div class="kpi-value" id="kpi-pending-verification" style="color: var(--color-high-risk);">5</div>
-                <div style="font-size: 11px; color: var(--text-on-surface-variant);">3 High · 2 Medium</div>
+                <div class="kpi-value" id="kpi-pending-verification" style="color: var(--color-high-risk);">0</div>
+                <div style="font-size: 11px; color: var(--text-on-surface-variant);">Tasks & exception review queue</div>
               </div>
             </div>
 
@@ -1000,6 +1053,50 @@
                   <!-- Rendered dynamically by control-room.js -->
                 </tbody>
               </table>
+            </div>
+          </div>
+
+          <!-- ================= TAB: INSPECTION TASKS ================= -->
+          <div id="tab-tasks" class="cr-tab-pane" style="display: none; flex-direction: column; gap: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+              <div>
+                <h2 class="font-display" style="font-size: 20px; color: #FFF; margin: 0;">Automated Field Inspection Dispatch</h2>
+                <div style="font-size: 12px; color: var(--text-on-surface-variant); margin-top: 4px;">
+                  Real-time algorithmic dispatch to nearest patrol officers when road segments cross risk thresholds.
+                </div>
+              </div>
+            </div>
+            <div class="glass-panel" style="padding: 16px; overflow-x: auto;">
+              <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                  <tr style="border-bottom: 1px solid var(--border-outline);">
+                    <th class="label-caps" style="padding: 10px;">Task ID</th>
+                    <th class="label-caps" style="padding: 10px;">Road Segment & Trigger</th>
+                    <th class="label-caps" style="padding: 10px;">Priority</th>
+                    <th class="label-caps" style="padding: 10px;">Assigned Officer</th>
+                    <th class="label-caps" style="padding: 10px;">Status</th>
+                    <th class="label-caps" style="padding: 10px;">Dispatched At</th>
+                  </tr>
+                </thead>
+                <tbody id="cr-tasks-table-body" class="data-mono" style="font-size: 12px;">
+                  <!-- Rendered dynamically by control-room.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- ================= TAB: EXCEPTION QUEUE ================= -->
+          <div id="tab-exceptions" class="cr-tab-pane" style="display: none; flex-direction: column; gap: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+              <div>
+                <h2 class="font-display" style="font-size: 20px; color: #FFF; margin: 0;">Control Room Exception Review Queue</h2>
+                <div style="font-size: 12px; color: var(--text-on-surface-variant); margin-top: 4px;">
+                  Human-in-the-loop review for conflicting, uncertain, or low-confidence hazard observations before road closure.
+                </div>
+              </div>
+            </div>
+            <div id="cr-exceptions-container" style="display: flex; flex-direction: column; gap: 12px;">
+              <!-- Rendered dynamically by control-room.js -->
             </div>
           </div>
 
@@ -1405,31 +1502,130 @@
     </div>
   </div>
 
-  <!-- ============================================================
-       FLOATING DEMO & MULTI-ROLE TEST BAR
-       ============================================================ -->
-  <aside class="demo-floating-bar" id="demo-quick-bar">
-    <span class="label-caps" style="color: var(--color-primary-bright); font-size: 10px;">ROLE SWITCH:</span>
-    <button type="button" class="demo-chip" onclick="window.RouteIQ.switchRoleView('DRIVER')">Driver (DRV-104)</button>
-    <button type="button" class="demo-chip" onclick="window.RouteIQ.switchRoleView('FIELD_OFFICER')">Field Officer (FO-104)</button>
-    <button type="button" class="demo-chip" onclick="window.RouteIQ.switchRoleView('CONTROL_ROOM')">Control Room (CR-01)</button>
-    <div style="width: 1px; height: 16px; background: var(--border-outline);"></div>
-    <button type="button" class="btn-primary" style="padding: 4px 12px; font-size: 10px;" onclick="window.RouteIQ.runScenarioLoop()">
-      <span class="material-symbols-outlined" style="font-size: 12px;">play_arrow</span> RUN SCENARIO SIMULATION
-    </button>
-    <button type="button" class="demo-chip" onclick="window.RouteIQ.resetState()" title="Reset Demo Data">↺ Reset</button>
-  </aside>
+  <!-- Modal 6: Exception Review & Human-in-the-Loop Override Modal -->
+  <div id="modal-exception-review" class="modal-backdrop">
+    <div class="modal-sheet" style="max-width: 580px;">
+      <div style="padding: 16px 20px; background: var(--bg-input); border-bottom: 1px solid var(--border-outline); display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span class="data-mono" id="modal-exc-id" style="color: #FF9900; font-size: 18px; font-weight: 700;">EXC-101</span>
+          <span class="badge-status badge-warning">EXCEPTION REVIEW</span>
+        </div>
+        <button id="btn-close-exception-modal" class="btn-icon">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <div style="padding: 20px; display: flex; flex-direction: column; gap: 16px;">
+        <div style="background: var(--bg-surface-high); border: 1px solid var(--border-outline); padding: 14px; border-radius: var(--radius-sm);">
+          <span class="label-caps" style="color: #00CED1; display: block; margin-bottom: 6px;">TARGET ROAD SEGMENT</span>
+          <div style="font-size: 16px; font-weight: 700; color: #FFF;" id="modal-exc-segment">Anna Salai (Saidapet Subway)</div>
+          <div style="display: flex; gap: 12px; margin-top: 8px; font-size: 12px;">
+            <div>Observation Confidence: <strong id="modal-exc-confidence" style="color: #FF9900;">65%</strong></div>
+          </div>
+        </div>
+
+        <div>
+          <span class="label-caps" style="display: block; margin-bottom: 6px;">UNCERTAINTY / CONFLICT TRIGGERS</span>
+          <div id="modal-exc-reasons" style="font-size: 13px; color: #FFF; background: rgba(255, 153, 0, 0.1); border-left: 3px solid #FF9900; padding: 10px 12px; border-radius: 4px;">
+            Conflicting reports between drone imagery and manual patrol.
+          </div>
+        </div>
+
+        <div>
+          <span class="label-caps" style="display: block; margin-bottom: 6px;">OBSERVATION DETAILS</span>
+          <div id="modal-exc-desc" style="font-size: 13px; color: var(--text-on-surface-variant); line-height: 1.5;">
+            Water depth fluctuating near critical threshold. Traffic sensor shows 0 km/h flow.
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 10px;">
+          <button id="btn-reject-exception" class="btn-secondary" style="flex: 1; padding: 12px; border-color: #38E54D; color: #38E54D;">
+            <span class="material-symbols-outlined" style="font-size: 16px;">check_circle</span> KEEP ROAD OPEN
+          </button>
+          <button id="btn-approve-exception" class="btn-danger" style="flex: 1; padding: 12px;">
+            <span class="material-symbols-outlined" style="font-size: 16px;">block</span> CONFIRM CLOSURE
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </div>
 
+<!-- GLOBAL FLOATING QUICK NAV BAR (TACTICAL ROLE SWITCHER) -->
+<nav id="chennai-quick-nav-bar" class="demo-floating-bar" aria-label="Quick Role Navigation">
+  <!-- Brand / Toggle Pill -->
+  <button type="button" id="qnav-btn-toggle" class="qnav-btn" title="Toggle Quick Nav Bar" style="padding: 5px 9px; color: #00CED1; background: rgba(0, 206, 209, 0.12); border-color: rgba(0, 206, 209, 0.3);">
+    <span class="live-status-dot" style="width: 7px; height: 7px;"></span>
+    <span style="font-weight: 700; letter-spacing: 0.05em; font-size: 11px;">QUICK NAV</span>
+    <span class="material-symbols-outlined qnav-toggle-icon" style="font-size: 14px;">unfold_less</span>
+  </button>
+
+  <div class="qnav-divider qnav-collapsible"></div>
+
+  <!-- Role Switcher Buttons -->
+  <div class="qnav-collapsible" style="display: flex; align-items: center; gap: 6px;">
+    <button type="button" id="qnav-btn-control" class="qnav-btn active" onclick="window.RouteIQ && window.RouteIQ.quickNavigate('CONTROL_ROOM')" title="Switch to Control Room Console (CR-01)">
+      <span class="material-symbols-outlined" style="font-size: 15px; color: #00CED1;">admin_panel_settings</span>
+      <span>Control Room</span>
+      <span style="font-size: 9px; opacity: 0.8; padding: 1px 4px; background: rgba(0, 206, 209, 0.2); border-radius: 3px;">CR-01</span>
+    </button>
+
+    <button type="button" id="qnav-btn-driver" class="qnav-btn" onclick="window.RouteIQ && window.RouteIQ.quickNavigate('DRIVER')" title="Switch to Ashok Leyland 4x4 In-Cab Driver Console (TRK-104)">
+      <span class="material-symbols-outlined" style="font-size: 15px; color: #60A5FA;">local_shipping</span>
+      <span>Driver HUD</span>
+      <span style="font-size: 9px; opacity: 0.8; padding: 1px 4px; background: rgba(96, 165, 250, 0.2); border-radius: 3px;">TRK-104</span>
+    </button>
+
+    <button type="button" id="qnav-btn-officer" class="qnav-btn" onclick="window.RouteIQ && window.RouteIQ.quickNavigate('FIELD_OFFICER')" title="Switch to Field Officer Mobile Recon Console (FO-02)">
+      <span class="material-symbols-outlined" style="font-size: 15px; color: #38E54D;">verified_user</span>
+      <span>Field Officer</span>
+      <span style="font-size: 9px; opacity: 0.8; padding: 1px 4px; background: rgba(56, 229, 77, 0.2); border-radius: 3px;">FO-02</span>
+    </button>
+
+    <button type="button" id="qnav-btn-login" class="qnav-btn" onclick="window.RouteIQ && window.RouteIQ.quickNavigate('LOGIN')" title="Return to Login Gateway & 2FA Gate">
+      <span class="material-symbols-outlined" style="font-size: 15px;">lock_open</span>
+      <span>Gateway</span>
+    </button>
+  </div>
+
+  <div class="qnav-divider qnav-collapsible"></div>
+
+  <!-- Tactical Simulation Triggers -->
+  <div class="qnav-collapsible" style="display: flex; align-items: center; gap: 6px;">
+    <button type="button" id="qnav-btn-demo" class="qnav-btn qnav-btn-action" onclick="window.RouteIQ && window.RouteIQ.runFullEndToEndScenario()" title="Trigger Automated End-to-End Flood & Re-Route Simulation">
+      <span class="material-symbols-outlined" style="font-size: 15px;">play_circle</span>
+      <span>Run Demo</span>
+    </button>
+
+    <button type="button" id="qnav-btn-reset" class="qnav-btn" onclick="window.RouteIQ && window.RouteIQ.resetState()" title="Reset All State to Baseline Chennai Scenario" style="padding: 6px 9px;">
+      <span class="material-symbols-outlined" style="font-size: 15px;">restart_alt</span>
+    </button>
+  </div>
+</nav>
+
 <!-- Application Main Initializer Script (Vanilla JS ES Module) -->
 <script type="module">
-  import { initAuth, switchView } from '/frontend/auth/auth.js';
+  import { initAuth, switchView, executeSecondStageVerification, showSecondStageVerification } from '/frontend/auth/auth.js';
   import { initDriverView } from '/frontend/driver/driver.js';
   import { initFieldOfficerView } from '/frontend/field-officer/field-officer.js';
-  import { initControlRoomView, switchControlRoomTab, openIncidentDetails, openVehicleDetails } from '/frontend/control-room/control-room.js';
+  import { initControlRoomView, switchControlRoomTab, openIncidentDetails, openVehicleDetails, openExceptionModal, runFullEndToEndScenario } from '/frontend/control-room/control-room.js';
   import { store } from '/frontend/shared/js/store.js';
   import { dialog } from '/frontend/shared/js/dialog.js';
+
+  function updateQuickNavActive(currentRole) {
+    const btnControl = document.getElementById('qnav-btn-control');
+    const btnDriver = document.getElementById('qnav-btn-driver');
+    const btnOfficer = document.getElementById('qnav-btn-officer');
+    const btnLogin = document.getElementById('qnav-btn-login');
+
+    [btnControl, btnDriver, btnOfficer, btnLogin].forEach(b => b && b.classList.remove('active'));
+
+    if (currentRole === 'CONTROL_ROOM' && btnControl) btnControl.classList.add('active');
+    else if (currentRole === 'DRIVER' && btnDriver) btnDriver.classList.add('active');
+    else if (currentRole === 'FIELD_OFFICER' && btnOfficer) btnOfficer.classList.add('active');
+    else if (currentRole === 'LOGIN' && btnLogin) btnLogin.classList.add('active');
+  }
 
   // Global window handle for inline event helpers
   window.RouteIQ = {
@@ -1442,14 +1638,52 @@
         onConfirm: () => {
           store.logout();
           switchView('view-login');
+          updateQuickNavActive('LOGIN');
           dialog.toast('Session ended. Terminal locked.', 'info');
         }
       });
     },
+    backToLogin: () => {
+      switchView('view-login');
+      updateQuickNavActive('LOGIN');
+    },
+    verifyAndContinue: (role) => {
+      executeSecondStageVerification(role);
+    },
     showForgotInfo: () => {
-      dialog.toast('Credential Recovery: Contact Sector North Dispatcher (CR-01) on VHF Ch 4.', 'info', 6000);
+      dialog.toast('Credential Recovery: Contact Chennai Emergency Dispatcher (CR-01) on VHF Ch 4.', 'info', 6000);
+    },
+    quickNavigate: (role) => {
+      if (role === 'LOGIN') {
+        switchView('view-login');
+        updateQuickNavActive('LOGIN');
+        dialog.toast('Returned to Authentication Gateway.', 'info', 2000);
+        return;
+      }
+
+      let user;
+      if (role === 'DRIVER') {
+        user = { id: 'DRV-104', name: 'Rajesh Kumar', email: 'driver.rajesh@routeiq.internal', role: 'DRIVER' };
+      } else if (role === 'FIELD_OFFICER') {
+        user = { id: 'FO-02', name: 'Sub-Inspector M. Selvam', email: 'officer.selvam@routeiq.internal', role: 'FIELD_OFFICER' };
+      } else {
+        user = { id: 'CR-01', name: 'Commander M. Ramanathan', email: 'command@routeiq.internal', role: 'CONTROL_ROOM' };
+      }
+
+      store.state.session = {
+        isAuthenticated: true,
+        role: role,
+        user: user,
+        isSecondStageVerified: true,
+        verificationStep: 2
+      };
+      store.saveState();
+
+      window.RouteIQ.switchRoleView(role);
+      dialog.toast(`Navigated to ${role === 'DRIVER' ? 'Driver In-Cab HUD' : role === 'FIELD_OFFICER' ? 'Field Officer Console' : 'Control Room Command'}.`, 'success', 2500);
     },
     switchRoleView: (role) => {
+      updateQuickNavActive(role);
       if (role === 'DRIVER') {
         switchView('view-driver');
         initDriverView();
@@ -1467,57 +1701,64 @@
     openIncident: (incId) => {
       openIncidentDetails(incId);
     },
+    openSegmentDetails: (segId) => {
+      openIncidentDetails(segId);
+    },
     openVehicleDetails: (vId) => {
       openVehicleDetails(vId);
     },
+    openExceptionModal: (excId) => {
+      openExceptionModal(excId);
+    },
+    runFullEndToEndScenario: () => {
+      runFullEndToEndScenario();
+    },
     fitActiveRoute: () => {
-      dialog.toast('Tactical map bounds adjusted to encompass Sector North corridor.', 'info');
+      dialog.toast('Tactical map bounds adjusted to encompass Chennai arterial corridors.', 'info');
     },
     centerVehicle: () => {
-      dialog.toast('Map auto-centered on active vehicle TRK-104.', 'info');
+      dialog.toast('Map auto-centered on active vehicle TRK-104 (Ashok Leyland 4x4).', 'info');
     },
     resetState: () => {
       dialog.confirm({
         title: 'RESET TACTICAL STATE',
-        message: 'Reset all active incidents, telemetries, and manifests to default sector status?',
+        message: 'Reset all active road segments, telemetries, and manifests to baseline Chennai monsoon status?',
         confirmText: 'RESET STATE',
         icon: 'restart_alt',
         onConfirm: () => {
           store.resetDemo();
-          dialog.toast('State reset to default sector scenario.', 'success');
+          dialog.toast('State reset to default Chennai scenario.', 'success');
           location.reload();
         }
       });
-    },
-    runScenarioLoop: () => {
-      dialog.toast('Starting Scenario Simulation: Field Officer report -> Control Room verification -> Route B dispatch.', 'info', 4000);
-      
-      const inc = store.reportIncident({
-        type: 'LANDSLIDE',
-        roadSegment: 'NH-S82 Milestone 14.2',
-        severity: 'HIGH',
-        reportedBy: 'FO-104 (Sub-Inspector Vikram Singh)',
-        description: 'Massive landslide blocking both lanes near S82 pass with 45-tonne boulder.'
-      });
-
-      setTimeout(() => {
-        store.verifyIncident(inc.id, true);
-        store.transmitRouteDispatch('TRK-104', 'Route B');
-        dialog.toast('Incident verified by CR-01. Route B dispatched to TRK-104 (Rajesh Kumar).', 'success', 5000);
-        window.RouteIQ.switchRoleView('DRIVER');
-      }, 1400);
     }
   };
 
   // Initialize
   document.addEventListener('DOMContentLoaded', () => {
+    // Quick Nav Toggle
+    const toggleBtn = document.getElementById('qnav-btn-toggle');
+    const qnavBar = document.getElementById('chennai-quick-nav-bar');
+    if (toggleBtn && qnavBar) {
+      toggleBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        qnavBar.classList.toggle('minimized');
+        const icon = toggleBtn.querySelector('.qnav-toggle-icon');
+        if (icon) {
+          icon.textContent = qnavBar.classList.contains('minimized') ? 'unfold_more' : 'unfold_less';
+        }
+      });
+    }
+
     initAuth((role) => {
       window.RouteIQ.switchRoleView(role);
     });
 
     const state = store.getState();
-    if (state.session.isAuthenticated && state.session.isSecondStageVerified) {
+    if (state.session && state.session.isAuthenticated && state.session.isSecondStageVerified) {
       window.RouteIQ.switchRoleView(state.session.role);
+    } else {
+      updateQuickNavActive('LOGIN');
     }
   });
 </script>
