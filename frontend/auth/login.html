@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROUTE-IQ — Tactical Authentication Gateway</title>
+  <link rel="stylesheet" href="/frontend/shared/css/theme.css">
+  <link rel="stylesheet" href="/frontend/shared/css/main.css">
+  <link rel="stylesheet" href="/frontend/shared/css/components.css">
+  <link rel="stylesheet" href="/frontend/auth/auth.css">
+</head>
+<body class="auth-body">
+  <div class="auth-container">
+    <div class="auth-card glass-panel">
+      <div class="auth-header">
+        <div class="logo-mark">ROUTE-IQ</div>
+        <h1 class="auth-title">CORRIDOR COMMAND ACCESS</h1>
+        <p class="auth-subtitle">Tactical Logistics & Route Intelligence Platform</p>
+      </div>
+
+      <form id="standalone-login-form" class="auth-form">
+        <div class="input-group">
+          <label class="label-caps" for="login-email">OPERATOR / DRIVER EMAIL</label>
+          <input type="email" id="login-email" class="input-field" placeholder="operator@sector-north.gov" required />
+        </div>
+
+        <div class="input-group">
+          <label class="label-caps" for="login-password">CREDENTIAL / ACCESS KEY</label>
+          <input type="password" id="login-password" class="input-field" placeholder="••••••••••••" required />
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 16px;">
+          AUTHENTICATE CREDENTIALS
+        </button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

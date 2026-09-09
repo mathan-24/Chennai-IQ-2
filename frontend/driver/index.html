@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROUTE-IQ — Driver Tactical Terminal</title>
+  <link rel="stylesheet" href="/frontend/shared/css/theme.css">
+  <link rel="stylesheet" href="/frontend/shared/css/main.css">
+  <link rel="stylesheet" href="/frontend/shared/css/components.css">
+  <link rel="stylesheet" href="/frontend/driver/css/driver.css">
+</head>
+<body>
+  <div class="driver-layout">
+    <nav class="driver-nav">
+      <a href="/frontend/driver/index.html" class="nav-item active">Dashboard</a>
+      <a href="/frontend/driver/mission.html" class="nav-item">Mission Brief</a>
+      <a href="/frontend/driver/navigation.html" class="nav-item">GPS Nav</a>
+      <a href="/frontend/driver/delivery.html" class="nav-item">Cargo & Cold-Chain</a>
+      <a href="/frontend/driver/alerts.html" class="nav-item">Corridor Alerts</a>
+      <a href="/frontend/driver/history.html" class="nav-item">Trip Log</a>
+    </nav>
+    <main class="driver-content" id="driver-main-content">
+      <h1 class="page-title">TACTICAL IN-CAB CONSOLE</h1>
+      <p style="color: var(--text-on-surface-variant); margin-top: 8px;">Vehicle: TRK-104 · Driver: Rajesh Kumar</p>
+    </main>
+  </div>
+  <script type="module" src="/frontend/driver/js/dashboard.js"></script>
+</body>
+</html>

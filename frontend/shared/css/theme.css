@@ -1,0 +1,383 @@
+/* ============================================================
+   ROUTE-IQ — OBSIDIAN COMMAND DESIGN SYSTEM
+   Dark Navy / Obsidian Theme for Emergency Logistics Command
+   ============================================================ */
+
+:root {
+  /* Surface & Backgrounds */
+  --bg-foundation: #0A0C10;
+  --bg-surface: #0E1515;
+  --bg-surface-low: #12171E;
+  --bg-surface-container: #1A2121;
+  --bg-surface-high: #242B2B;
+  --bg-surface-highest: #2F3636;
+  --bg-input: #05070A;
+
+  /* Primary Cyan / HUD Glow */
+  --color-primary: #00CED1;
+  --color-primary-bright: #47EAED;
+  --color-primary-fixed: #5AF8FB;
+  --color-primary-dim: #2DDBDE;
+  --color-on-primary: #002020;
+  --color-primary-container: rgba(0, 206, 209, 0.15);
+
+  /* Operational Alert States */
+  --color-normal: #47EAED;
+  --color-warning: #FFA54A;
+  --color-high-risk: #FFCB9E;
+  --color-critical: #FFB4AB;
+  --color-critical-dark: #93000A;
+  --color-critical-bg: rgba(147, 0, 10, 0.25);
+  --color-success: #38E54D;
+  --color-purple: #C084FC;
+
+  /* Typography & Neutrals */
+  --text-on-surface: #DDE4E3;
+  --text-on-surface-variant: #859493;
+  --text-muted: #5C6B6A;
+  --text-white: #FFFFFF;
+  --text-black: #000000;
+
+  /* Borders & Dividers */
+  --border-outline: #1E293B;
+  --border-outline-light: #3B4949;
+  --border-outline-bright: rgba(0, 206, 209, 0.4);
+
+  /* Elevation Glows */
+  --glow-primary: 0 0 12px rgba(0, 206, 209, 0.4);
+  --glow-critical: 0 0 12px rgba(255, 180, 171, 0.4);
+  --shadow-panel: 0 8px 32px rgba(0, 0, 0, 0.6);
+
+  /* Spacing Base */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+}
+
+/* Global Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg-foundation);
+  color: var(--text-on-surface);
+  min-height: 100vh;
+  line-height: 1.5;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Typography Utility Classes */
+.font-display {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.label-caps {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-on-surface-variant);
+}
+
+.data-mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 16px;
+}
+
+/* Glass Panels & Containers */
+.glass-panel {
+  background: rgba(18, 23, 30, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-outline);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-panel);
+}
+
+.glass-panel-subtle {
+  background: rgba(22, 29, 29, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-outline);
+  border-radius: var(--radius-md);
+}
+
+.interactive-glow {
+  transition: all 0.2s ease-in-out;
+}
+.interactive-glow:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 10px rgba(0, 206, 209, 0.3);
+}
+
+/* Glow Border Focus */
+.tech-glow-border {
+  border: 1px solid var(--border-outline);
+  transition: all 0.2s ease;
+}
+.tech-glow-border:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 12px rgba(0, 206, 209, 0.3);
+}
+
+/* Background Topo & Grid */
+.bg-topo-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 50% 20%, rgba(0, 206, 209, 0.05) 0%, transparent 60%),
+    linear-gradient(to right, rgba(59, 73, 73, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(59, 73, 73, 0.07) 1px, transparent 1px);
+  background-size: 100% 100%, 36px 36px, 36px 36px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Status Badges & Chips */
+.badge-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.badge-critical {
+  background: rgba(255, 180, 171, 0.12);
+  color: var(--color-critical);
+  border: 1px solid rgba(255, 180, 171, 0.3);
+}
+
+.badge-warning {
+  background: rgba(255, 165, 74, 0.12);
+  color: var(--color-warning);
+  border: 1px solid rgba(255, 165, 74, 0.3);
+}
+
+.badge-recommended {
+  background: rgba(0, 206, 209, 0.18);
+  color: var(--color-primary-bright);
+  border: 1px solid rgba(0, 206, 209, 0.4);
+  box-shadow: 0 0 8px rgba(0, 206, 209, 0.2);
+}
+
+.badge-verified {
+  background: rgba(71, 234, 237, 0.12);
+  color: var(--color-primary-bright);
+  border: 1px solid rgba(71, 234, 237, 0.3);
+}
+
+.badge-under-review {
+  background: rgba(255, 203, 158, 0.12);
+  color: var(--color-high-risk);
+  border: 1px solid rgba(255, 203, 158, 0.3);
+}
+
+.badge-emergency {
+  background: rgba(192, 132, 252, 0.15);
+  color: var(--color-purple);
+  border: 1px solid rgba(192, 132, 252, 0.4);
+}
+
+/* Custom Buttons */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--color-primary-bright);
+  color: var(--text-black);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 12px 20px;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(0, 206, 209, 0.3);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.btn-primary:hover {
+  background: var(--color-primary-fixed);
+  box-shadow: 0 0 18px rgba(0, 206, 209, 0.5);
+  transform: translateY(-1px);
+}
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--color-primary-bright);
+  border: 1px solid var(--color-primary-bright);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-secondary:hover {
+  background: rgba(0, 206, 209, 0.1);
+  border-color: var(--color-primary-fixed);
+}
+
+.btn-danger {
+  background: var(--color-critical-dark);
+  color: #FFFFFF;
+  border: 1px solid var(--color-critical);
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-danger:hover {
+  background: #B3000C;
+  box-shadow: 0 0 10px rgba(255, 180, 171, 0.4);
+}
+
+.btn-icon {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(22, 29, 29, 0.8);
+  border: 1px solid var(--border-outline);
+  color: var(--text-on-surface-variant);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-icon:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  background: rgba(0, 206, 209, 0.1);
+}
+
+/* Custom Form Controls */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.input-field-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-outline);
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+}
+.input-field-wrapper:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 10px rgba(0, 206, 209, 0.3);
+}
+
+.input-field-wrapper .input-icon {
+  position: absolute;
+  left: 12px;
+  color: var(--text-on-surface-variant);
+  font-size: 18px;
+  pointer-events: none;
+}
+
+.input-control {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 12px 14px 12px 40px;
+  color: var(--text-white);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+}
+.input-control::placeholder {
+  color: var(--text-muted);
+}
+.input-control.font-mono-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+}
+
+/* Pulsing Animations */
+@keyframes pulse-ring {
+  0% { transform: scale(0.85); opacity: 0.8; }
+  50% { transform: scale(1.4); opacity: 0.2; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+.pulse-circle {
+  position: relative;
+  width: 12px;
+  height: 12px;
+  background-color: var(--color-primary);
+  border-radius: 50%;
+}
+.pulse-circle::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid var(--color-primary);
+  animation: pulse-ring 2s cubic-bezier(0.2, 0.6, 0.35, 1) infinite;
+}
+
+.pulse-critical {
+  background-color: var(--color-critical);
+}
+.pulse-critical::after {
+  border-color: var(--color-critical);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-foundation);
+}
+::-webkit-scrollbar-thumb {
+  background: #1E293B;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-dim);
+}

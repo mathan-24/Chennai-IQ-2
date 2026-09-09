@@ -1,0 +1,26 @@
+/* ROUTE-IQ — Control Room Module CSS */
+.control-room-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.control-sidebar {
+  background: var(--bg-surface-low);
+  border-right: 1px solid var(--border-outline);
+  display: flex;
+  flex-direction: column;
+}
+
+.control-main {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}

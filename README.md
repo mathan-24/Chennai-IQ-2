@@ -1,11 +1,18 @@
-<div align="center">
+# ROUTE-IQ
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+**Tactical Logistics & Dynamic Corridor Risk Intelligence Platform**
 
-  <h1>Built with AI Studio</h2>
+ROUTE-IQ is a real-time command, field-recon, and tactical vehicle navigation platform built for high-risk transit corridors and unpredictable mountain passes.
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+## Key Subsystems
+- **Control Room Operations**: High-altitude corridor monitoring, dynamic rerouting, hazard verification, and automated risk scoring.
+- **Field Officer Recon**: Mobile-first field reconnaissance, on-site hazard verification, GPS geotagging, and image evidence transmission.
+- **Driver Tactical Terminal**: In-cab route telemetry, mission briefings, turn-by-turn bypass guidance, and cold-chain cargo tracking.
+- **Dynamic Risk Engine**: Real-time multi-factor route scoring incorporating Doppler weather, road topography, seismic/landslide indicators, and verified incident alerts.
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
-
-</div>
+## Project Structure
+- `frontend/`: Web interfaces (Auth, Control Room, Field Officer, Driver, Shared modules)
+- `backend/`: Python/FastAPI microservices and REST API endpoints
+- `services/`: Specialized services (Risk Engine, Weather Ingest, Routing)
+- `database/`: SQL schemas, migrations, and seed datasets
+- `docs/`: Architecture diagrams, data flows, and API reference

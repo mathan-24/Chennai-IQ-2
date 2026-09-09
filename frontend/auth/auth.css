@@ -1,0 +1,46 @@
+/* ROUTE-IQ — Auth Stylesheet */
+.auth-body {
+  background-color: var(--bg-base);
+  color: var(--text-on-surface);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.auth-container {
+  width: 100%;
+  max-width: 480px;
+}
+
+.auth-card {
+  padding: 32px;
+  border-radius: var(--radius-md);
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.auth-title {
+  font-family: 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #FFF;
+  margin-top: 8px;
+}
+
+.auth-subtitle {
+  font-size: 13px;
+  color: var(--text-on-surface-variant);
+  margin-top: 4px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

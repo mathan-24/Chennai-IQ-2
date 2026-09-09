@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROUTE-IQ | Real-Time Disruption Monitoring & Safe Routing</title>
+  <meta name="description" content="Operational coordination and decision-support platform for critical logistics in disaster-prone regions." />
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <!-- Route-IQ Stylesheets -->
+  <link rel="stylesheet" href="/frontend/shared/css/theme.css" />
+  <link rel="stylesheet" href="/frontend/shared/css/main.css" />
+</head>
+<body>
+
+<div class="app-viewport">
+  <div class="bg-topo-overlay"></div>
+
+  <!-- ============================================================
+       VIEW 1: INITIAL LOGIN SCREEN (HERO SPLIT)
+       ============================================================ -->
+  <section id="view-login" class="view-section active-view">
+    <div class="hero-split-container">
+      
+      <!-- LEFT HERO VISUAL PANE (Minimalist & Cinematic) -->
+      <div class="hero-visual-pane">
+        <div class="hero-bg-image"></div>
+        <div class="hero-grid-overlay"></div>
+        <div class="hero-radar-sweep"></div>
+        <div class="hero-vignette"></div>
+
+        <div class="hero-top-bar">
+          <div class="hero-status-pill">
+            <span class="live-status-dot"></span>
+            <span class="data-mono" style="font-size: 11px; letter-spacing: 0.1em; color: #00CED1;">
+              ONLINE · CORRIDOR MESH
+            </span>
+          </div>
+          <span class="data-mono" style="font-size: 11px; color: rgba(255, 255, 255, 0.4);">
+            32.7266° N, 74.8570° E
+          </span>
+        </div>
+
+        <!-- Central Brand Center -->
+        <div class="hero-brand-center">
+          <div class="hero-logo-box">
+            <span class="material-symbols-outlined" style="font-size: 40px; color: #00CED1; font-variation-settings: 'FILL' 1;">
+              alt_route
+            </span>
+          </div>
+
+          <h1 class="hero-title font-display">
+            ROUTE<span style="color: #00CED1;">-IQ</span>
+          </h1>
+
+          <div class="hero-subtag">
+            TACTICAL CORRIDOR INTELLIGENCE
+          </div>
+        </div>
+
+        <div class="hero-bottom-bar">
+          <span class="data-mono" style="font-size: 11px; color: rgba(255, 255, 255, 0.35); letter-spacing: 0.08em;">
+            SECTOR NORTH · ACTIVE TELEMETRY
+          </span>
+          <span class="data-mono" style="font-size: 11px; color: #00CED1; letter-spacing: 0.08em;">
+            SYS.VER 2.6.4
+          </span>
+        </div>
+      </div>
+
+      <!-- RIGHT AUTH PANE -->
+      <div class="hero-auth-pane">
+        <div class="hero-login-card glass-panel">
+          <div style="width: 100%; text-align: left; margin-bottom: 24px;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+              <span class="material-symbols-outlined" style="color: #00CED1; font-size: 20px;">lock</span>
+              <span class="label-caps" style="color: #00CED1; letter-spacing: 0.1em;">
+                SECURE AUTHENTICATION GATEWAY
+              </span>
+            </div>
+            <h2 class="font-display" style="font-size: 24px; color: #FFF; letter-spacing: -0.02em; margin: 0;">
+              Authorized Sign In
+            </h2>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: 6px; margin-bottom: 0;">
+              Enter your official credentials to access your tactical dashboard.
+            </p>
+          </div>
+
+          <!-- Login Form -->
+          <form id="login-form" style="width: 100%; display: flex; flex-direction: column; gap: 16px;">
+            <div id="login-error" style="display: none; background: rgba(147, 0, 10, 0.4); border: 1px solid var(--color-critical); color: var(--color-critical); padding: 8px; border-radius: var(--radius-sm); font-size: 12px;"></div>
+
+            <div class="input-group">
+              <label class="label-caps" for="login-email" style="text-align: left;">OFFICIAL EMAIL / IDENTIFIER</label>
+              <div class="input-field-wrapper">
+                <span class="material-symbols-outlined input-icon">mail</span>
+                <input type="email" id="login-email" class="input-control" placeholder="name@routeiq.internal" value="command@routeiq.internal" required />
+              </div>
+            </div>
+
+            <div class="input-group">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <label class="label-caps" for="login-password">PASSWORD</label>
+                <a href="#" onclick="event.preventDefault(); alert('Please contact Control Room Dispatcher (CR-01) for password reset.');" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #00CED1; text-decoration: none;">Forgot password?</a>
+              </div>
+              <div class="input-field-wrapper" style="margin-top: 4px;">
+                <span class="material-symbols-outlined input-icon">lock</span>
+                <input type="password" id="login-password" class="input-control" placeholder="Enter secure password" value="••••••••••••" required />
+                <button type="button" id="toggle-password-btn" style="position: absolute; right: 12px; background: none; border: none; color: var(--text-on-surface-variant); cursor: pointer;">
+                  <span class="material-symbols-outlined" style="font-size: 18px;">visibility_off</span>
+                </button>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-primary" style="margin-top: 8px; width: 100%; padding: 14px;">
+              AUTHENTICATE ACCESS <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+            </button>
+          </form>
+
+          <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border-outline); width: 100%; display: flex; flex-direction: column; gap: 8px;">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <span class="data-mono" style="font-size: 10px; color: var(--text-muted);">
+                ENCRYPTION: 256-BIT TLS
+              </span>
+              <span class="data-mono" style="font-size: 10px; color: #00CED1;">
+                ACCESS: RESTRICTED
+              </span>
+            </div>
+            <p class="data-mono" style="font-size: 11px; color: var(--text-muted); text-align: center; margin: 0; margin-top: 4px;">
+              © 2026 Route-IQ. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VIEW 2: VERIFYING ACCOUNT (Image 3 reference)
+       ============================================================ -->
+  <section id="view-verifying" class="view-section">
+    <div class="auth-container">
+      <div style="display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 440px; width: 100%;">
+        <h1 class="font-display" style="font-size: 32px; color: var(--color-primary-bright); margin-bottom: 6px; letter-spacing: -0.02em;">
+          VERIFYING ACCOUNT
+        </h1>
+        <p style="font-size: 14px; color: var(--text-on-surface-variant); margin-bottom: 24px;">
+          Please wait while we secure your access
+        </p>
+
+        <div class="verify-checklist-card">
+          <!-- Step 1 -->
+          <div id="verify-step-1" class="check-item opacity-40">
+            <div class="check-item-icon">
+              <span class="material-symbols-outlined" style="font-size: 16px;">radio_button_unchecked</span>
+            </div>
+            <span style="font-size: 15px; color: var(--text-on-surface);">Validating credentials</span>
+          </div>
+
+          <!-- Step 2 -->
+          <div id="verify-step-2" class="check-item opacity-40">
+            <div class="check-item-icon">
+              <span class="material-symbols-outlined" style="font-size: 16px;">radio_button_unchecked</span>
+            </div>
+            <span style="font-size: 15px; color: var(--text-on-surface);">Identifying account</span>
+          </div>
+
+          <!-- Step 3 -->
+          <div id="verify-step-3" class="check-item opacity-40">
+            <div class="pulse-circle" style="margin: 0 6px;"></div>
+            <span style="font-size: 15px; color: var(--color-primary-bright); font-weight: 600;">Preparing secure access</span>
+          </div>
+        </div>
+
+        <p class="label-caps" style="color: var(--text-muted); margin-top: 24px; font-size: 11px;">
+          THIS WILL ONLY TAKE A FEW SECONDS...
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VIEW 3: SECOND-STAGE ROLE VERIFICATION (Image 5 reference)
+       ============================================================ -->
+  <section id="view-second-stage" class="view-section">
+    <div class="auth-container">
+      <div class="login-card glass-panel">
+
+        <!-- DRIVER SECOND STAGE (Image 5) -->
+        <form id="driver-verify-form" style="width: 100%; display: flex; flex-direction: column; gap: 16px;">
+          <div style="margin-bottom: 12px; display: flex; flex-direction: column; align-items: center;">
+            <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--bg-surface-high); border: 1px solid var(--border-outline); display: flex; align-items: center; justify-content: center; margin-bottom: 12px;">
+              <span class="material-symbols-outlined" style="color: var(--color-primary-bright); font-size: 24px; font-variation-settings: 'FILL' 1;">local_shipping</span>
+            </div>
+            <h2 class="font-display" style="font-size: 22px; color: var(--color-primary-bright); letter-spacing: -0.02em;">
+              DRIVER VERIFICATION
+            </h2>
+            <p style="font-size: 13px; color: var(--text-on-surface-variant); margin-top: 2px;">
+              Please verify your credentials
+            </p>
+          </div>
+
+          <div class="input-group">
+            <label class="label-caps" for="driver-user-id" style="text-align: left;">USER ID</label>
+            <div class="input-field-wrapper">
+              <span class="material-symbols-outlined input-icon">badge</span>
+              <input type="text" id="driver-user-id" class="input-control font-mono-val" value="DRV-104" required />
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label class="label-caps" for="driver-vehicle-no" style="text-align: left;">VEHICLE NUMBER</label>
+            <div class="input-field-wrapper">
+              <span class="material-symbols-outlined input-icon">directions_car</span>
+              <input type="text" id="driver-vehicle-no" class="input-control font-mono-val" value="TRK-104" required />
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary" style="margin-top: 8px; width: 100%;">
+            VERIFY & CONTINUE
+          </button>
+
+          <div style="margin-top: 14px; display: flex; align-items: center; justify-content: center; gap: 6px; color: var(--text-muted);">
+            <span class="material-symbols-outlined" style="font-size: 14px;">lock</span>
+            <span class="label-caps" style="font-size: 10px;">SECURE VERIFICATION FOR DRIVER ACCESS</span>
+          </div>
+        </form>
+
+        <!-- FIELD OFFICER SECOND STAGE -->
+        <form id="officer-verify-form" style="width: 100%; display: none; flex-direction: column; gap: 16px;">
+          <div style="margin-bottom: 12px; display: flex; flex-direction: column; align-items: center;">
+            <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--bg-surface-high); border: 1px solid var(--border-outline); display: flex; align-items: center; justify-content: center; margin-bottom: 12px;">
+              <span class="material-symbols-outlined" style="color: var(--color-primary-bright); font-size: 24px;">verified_user</span>
+            </div>
+            <h2 class="font-display" style="font-size: 22px; color: var(--color-primary-bright); letter-spacing: -0.02em;">
+              FIELD OFFICER VERIFICATION
+            </h2>
+            <p style="font-size: 13px; color: var(--text-on-surface-variant); margin-top: 2px;">
+              Please verify your field credentials
+            </p>
+          </div>
+
+          <div class="input-group">
+            <label class="label-caps" for="officer-id-input" style="text-align: left;">OFFICER ID</label>
+            <div class="input-field-wrapper">
+              <span class="material-symbols-outlined input-icon">badge</span>
+              <input type="text" id="officer-id-input" class="input-control font-mono-val" value="FO-104" required />
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary" style="margin-top: 8px; width: 100%;">
+            VERIFY & CONTINUE
+          </button>
+
+          <div style="margin-top: 14px; display: flex; align-items: center; justify-content: center; gap: 6px; color: var(--text-muted);">
+            <span class="material-symbols-outlined" style="font-size: 14px;">lock</span>
+            <span class="label-caps" style="font-size: 10px;">SECURE VERIFICATION FOR FIELD OFFICER ACCESS</span>
+          </div>
+        </form>
+
+        <!-- CONTROL ROOM SECOND STAGE -->
+        <form id="control-verify-form" style="width: 100%; display: none; flex-direction: column; gap: 16px;">
+          <div style="margin-bottom: 12px; display: flex; flex-direction: column; align-items: center;">
+            <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--bg-surface-high); border: 1px solid var(--border-outline); display: flex; align-items: center; justify-content: center; margin-bottom: 12px;">
+              <span class="material-symbols-outlined" style="color: var(--color-primary-bright); font-size: 24px;">admin_panel_settings</span>
+            </div>
+            <h2 class="font-display" style="font-size: 22px; color: var(--color-primary-bright); letter-spacing: -0.02em;">
+              CONTROL ROOM VERIFICATION
+            </h2>
+            <p style="font-size: 13px; color: var(--text-on-surface-variant); margin-top: 2px;">
+              Command authority verification
+            </p>
+          </div>
+
+          <div class="input-group">
+            <label class="label-caps" for="control-id-input" style="text-align: left;">USER ID</label>
+            <div class="input-field-wrapper">
+              <span class="material-symbols-outlined input-icon">badge</span>
+              <input type="text" id="control-id-input" class="input-control font-mono-val" value="CR-01" required />
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary" style="margin-top: 8px; width: 100%;">
+            VERIFY & CONTINUE
+          </button>
+
+          <div style="margin-top: 14px; display: flex; align-items: center; justify-content: center; gap: 6px; color: var(--text-muted);">
+            <span class="material-symbols-outlined" style="font-size: 14px;">lock</span>
+            <span class="label-caps" style="font-size: 10px;">SECURE VERIFICATION FOR CONTROL ROOM ACCESS</span>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VIEW 4: DRIVER DASHBOARD (Screen 4 reference)
+       ============================================================ -->
+  <section id="view-driver" class="view-section">
+    <div class="driver-layout">
+      <!-- Header -->
+      <header class="driver-header">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="material-symbols-outlined" style="color: var(--color-primary-bright); font-size: 24px;">alt_route</span>
+            <span class="font-display" style="font-size: 18px; font-weight: 700; color: #FFF;">ROUTE-IQ</span>
+          </div>
+          <span class="label-caps" style="color: var(--text-on-surface-variant);">Driver Navigation Console</span>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div class="badge-status badge-verified">
+            <span class="pulse-circle" style="width: 8px; height: 8px;"></span>
+            LIVE TRIP MONITORING
+          </div>
+          <div class="badge-status badge-verified">GPS LINKED</div>
+          <div class="data-mono" style="color: #FFF; font-size: 12px;">
+            <span style="color: var(--color-primary);">DRV-104</span> · Rajesh Kumar
+          </div>
+          <button class="btn-icon" onclick="window.RouteIQ.logout()" title="Logout / Switch Role">
+            <span class="material-symbols-outlined" style="font-size: 18px;">logout</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main 3-Column Content Grid -->
+      <div class="driver-content-grid">
+        
+        <!-- Left Column: Mission Info & Weather -->
+        <div class="driver-panel">
+          <!-- Mission Information -->
+          <div class="glass-panel" style="padding: 16px;">
+            <span class="label-caps" style="display: block; margin-bottom: 12px;">MISSION INFORMATION</span>
+            <div style="display: flex; flex-direction: column; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 12px;">
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--text-on-surface-variant);">Vehicle:</span>
+                <strong style="color: #FFF;">TRK-104</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--text-on-surface-variant);">Cargo:</span>
+                <strong style="color: var(--color-warning);">Life-saving medicines</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--text-on-surface-variant);">Priority:</span>
+                <span class="badge-status badge-critical">HIGH</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--text-on-surface-variant);">Destination:</span>
+                <span style="color: #FFF; text-align: right;">Remote Hospital, Arunachal Pradesh</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-outline); padding-top: 8px; margin-top: 4px;">
+                <span style="color: var(--text-on-surface-variant);">ETA:</span>
+                <strong style="color: var(--color-primary-bright); font-size: 14px;">4h 25m</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--text-on-surface-variant);">Distance Remaining:</span>
+                <strong style="color: #FFF;">186 km</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Weather Conditions -->
+          <div class="glass-panel" id="driver-weather-metrics" style="padding: 16px;">
+            <!-- Rendered by driver.js -->
+          </div>
+
+          <!-- Corridor Comparison -->
+          <div class="glass-panel" style="padding: 16px;">
+            <span class="label-caps" style="display: block; margin-bottom: 10px;">CORRIDOR COMPARISON</span>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <!-- Route A -->
+              <div style="background: rgba(147, 0, 10, 0.15); border: 1px solid rgba(255, 180, 171, 0.4); padding: 10px; border-radius: var(--radius-sm);">
+                <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 11px;">
+                  <strong style="color: #FFF;">Route A</strong>
+                  <span style="color: var(--color-critical); font-weight: bold;">90 / 100 RISK</span>
+                </div>
+                <div style="font-size: 11px; color: var(--color-critical); margin-top: 2px;">4h 35m · 182 km · <strong>BLOCKED (S82 Landslide)</strong></div>
+              </div>
+              <!-- Route B -->
+              <div style="background: rgba(0, 206, 209, 0.15); border: 1px solid var(--color-primary); padding: 10px; border-radius: var(--radius-sm); box-shadow: 0 0 8px rgba(0, 206, 209, 0.2);">
+                <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 11px;">
+                  <strong style="color: var(--color-primary-bright);">Route B ★</strong>
+                  <span style="color: var(--color-primary-bright); font-weight: bold;">35 / 100 RISK</span>
+                </div>
+                <div style="font-size: 11px; color: #DDE4E3; margin-top: 2px;">4h 25m · 186 km · <strong>RECOMMENDED · ACTIVE</strong></div>
+              </div>
+              <!-- Route C -->
+              <div style="background: rgba(22, 29, 29, 0.7); border: 1px solid var(--border-outline); padding: 10px; border-radius: var(--radius-sm);">
+                <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 11px;">
+                  <strong style="color: #FFF;">Route C</strong>
+                  <span style="color: var(--color-warning);">55 / 100 RISK</span>
+                </div>
+                <div style="font-size: 11px; color: var(--text-on-surface-variant); margin-top: 2px;">5h 10m · 214 km · Alternative Corridor</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Center Column: Live Route Map & Tactical Navigation -->
+        <div class="driver-panel">
+          <div class="map-card-container">
+            <div id="driver-map-container" style="width: 100%; height: 100%;"></div>
+          </div>
+
+          <!-- Live Recommended Action -->
+          <div class="glass-panel" style="padding: 16px; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <span class="label-caps" style="color: var(--color-primary-bright);">RECOMMENDED ACTION</span>
+              <div style="font-size: 16px; font-weight: 700; color: #FFF;">Take Route B (Ridge Bypass)</div>
+              <div style="font-size: 12px; color: var(--text-on-surface-variant); margin-top: 2px;">Clear of active landslides. Validated for heavy cargo truck TRK-104.</div>
+            </div>
+            <div style="display: flex; gap: 10px;">
+              <button id="btn-driver-navigate-b" class="btn-primary">
+                <span class="material-symbols-outlined" style="font-size: 16px;">navigation</span> NAVIGATE ROUTE B
+              </button>
+              <button id="btn-driver-report-hazard" class="btn-secondary">
+                <span class="material-symbols-outlined" style="font-size: 16px;">report</span> REPORT HAZARD
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Current Active Nav & Disruption Warning -->
+        <div class="driver-panel">
+          <!-- Active Navigation -->
+          <div class="glass-panel" style="padding: 16px; border: 1px solid var(--color-primary);">
+            <span class="label-caps" style="display: block; margin-bottom: 8px;">CURRENT ACTIVE NAVIGATION</span>
+            <div style="font-size: 22px; font-weight: 700; color: var(--color-primary-bright);">Route B</div>
+            <div style="font-size: 13px; color: var(--text-on-surface-variant); margin-bottom: 12px;">Ridge Bypass Corridor</div>
+            <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0, 206, 209, 0.1); padding: 10px 12px; border-radius: var(--radius-sm); border: 1px solid rgba(0, 206, 209, 0.3);">
+              <div>
+                <span class="badge-status badge-recommended">● ROUTE B ACTIVE</span>
+                <div style="font-size: 11px; color: #FFF; margin-top: 4px;">LOWER OPERATIONAL RISK</div>
+              </div>
+              <div style="font-family: 'Inter', sans-serif; font-size: 24px; font-weight: 700; color: var(--color-primary-bright);">
+                35 <span style="font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--text-on-surface-variant);">/ 100</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Disruption Warning Banner -->
+          <div id="driver-disruption-banner" class="disruption-banner">
+            <div style="display: flex; align-items: center; gap: 8px; color: var(--color-critical);">
+              <span class="material-symbols-outlined" style="font-size: 20px;">warning</span>
+              <strong class="font-display" style="font-size: 14px; letter-spacing: -0.01em;">LANDSLIDE VERIFIED</strong>
+            </div>
+            <div style="font-size: 12px; color: #FFF; line-height: 1.4;">
+              <strong>Road Segment S82:</strong> Route A is blocked ahead.<br />
+              Route B is recommended as the lower-risk alternative.
+            </div>
+            <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-on-surface-variant); margin-top: 4px;">
+              <span>Verified: 10:28 AM</span>
+              <span>Source: FO-104</span>
+            </div>
+            <button id="btn-view-disruption" class="btn-danger" style="margin-top: 6px; width: 100%;">
+              VIEW DISRUPTION REPORT
+            </button>
+          </div>
+
+          <!-- Next Checkpoint -->
+          <div class="glass-panel" style="padding: 16px;">
+            <span class="label-caps" style="display: block; margin-bottom: 6px;">NEXT ACTION</span>
+            <div style="font-size: 14px; font-weight: 600; color: #FFF;">Continue on Ridge Bypass</div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--color-primary); margin-top: 4px;">
+              Next Checkpoint: Bomdila Junction (12.4 km)
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VIEW 5: FIELD OFFICER CONSOLE (Screen 6 reference)
+       ============================================================ -->
+  <section id="view-field-officer" class="view-section">
+    <div class="field-officer-layout">
+      <!-- Header -->
+      <header class="driver-header">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="material-symbols-outlined" style="color: var(--color-primary-bright); font-size: 24px;">verified_user</span>
+            <span class="font-display" style="font-size: 18px; font-weight: 700; color: #FFF;">ROUTE-IQ</span>
+          </div>
+          <span class="label-caps" style="color: var(--text-on-surface-variant);">Field Operations · Sector North</span>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div class="badge-status badge-verified">● ONLINE</div>
+          <div class="data-mono" style="color: #FFF; font-size: 12px;">
+            <span style="color: var(--color-primary);">FO-104</span> · Last sync: 2 min ago
+          </div>
+          <button class="btn-icon" onclick="window.RouteIQ.logout()" title="Logout / Switch Role">
+            <span class="material-symbols-outlined" style="font-size: 18px;">logout</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Content Grid -->
+      <div class="field-grid">
+        
+        <!-- Left: Quick Action & Patrol Telemetry -->
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <!-- Big Action Card -->
+          <div class="glass-panel" style="padding: 24px; text-align: center; border: 1px solid var(--color-primary);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(0, 206, 209, 0.15); border: 1px solid var(--color-primary); display: flex; align-items: center; justify-content: center; margin: 0 auto 14px;">
+              <span class="material-symbols-outlined" style="color: var(--color-primary-bright); font-size: 28px;">add_alert</span>
+            </div>
+            <h2 class="font-display" style="font-size: 20px; color: #FFF; margin-bottom: 6px;">REPORT ROAD HAZARD</h2>
+            <p style="font-size: 13px; color: var(--text-on-surface-variant); margin-bottom: 16px;">
+              Capture live GPS fix, road blockage observation, and photographic evidence for Control Room verification.
+            </p>
+            <button id="btn-open-field-report" class="btn-primary" style="width: 100%; padding: 14px;">
+              <span class="material-symbols-outlined">camera_alt</span> REPORT NEW INCIDENT
+            </button>
+          </div>
+
+          <!-- Patrol Status & Satellite Sync -->
+          <div class="glass-panel" style="padding: 16px;">
+            <span class="label-caps" style="display: block; margin-bottom: 12px;">PATROL TELEMETRY & SYNC</span>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px;">
+              <div>
+                <span style="color: var(--text-on-surface-variant);">Patrol Status:</span>
+                <div style="color: var(--color-primary-bright); font-weight: bold; margin-top: 2px;">Active Patrol (Sector N)</div>
+              </div>
+              <div>
+                <span style="color: var(--text-on-surface-variant);">Battery:</span>
+                <div style="color: #FFF; font-weight: bold; margin-top: 2px;">78% (Nominal)</div>
+              </div>
+              <div>
+                <span style="color: var(--text-on-surface-variant);">Satellite Sync:</span>
+                <div style="color: var(--color-primary); font-weight: bold; margin-top: 2px;">Connected · 2.1s latency</div>
+              </div>
+              <div>
+                <span style="color: var(--text-on-surface-variant);">GPS Fix:</span>
+                <div style="color: #38E54D; font-weight: bold; margin-top: 2px;">LOCKED (±15m)</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Control Room Tasks -->
+          <div class="glass-panel" style="padding: 16px;">
+            <div id="field-task-card">
+              <!-- Rendered by field-officer.js -->
+            </div>
+            <div style="display: flex; gap: 8px; margin-top: 14px;">
+              <button id="btn-task-ack" class="btn-secondary" style="flex: 1;">ACKNOWLEDGE</button>
+              <button id="btn-task-start" class="btn-secondary" style="flex: 1;">START TASK</button>
+              <button id="btn-task-submit" class="btn-primary" style="flex: 1;">SUBMIT VERIF</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Recent Field Reports & Nearby Radar -->
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div class="glass-panel" style="padding: 16px; flex: 1;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+              <span class="label-caps">MY REPORTS & SECTOR INCIDENTS</span>
+              <span class="data-mono" style="font-size: 11px; color: var(--color-primary);">Sector North</span>
+            </div>
+            <div id="field-reports-list" style="display: flex; flex-direction: column; gap: 10px;">
+              <!-- Rendered by field-officer.js -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VIEW 6: CONTROL ROOM COMMAND CENTER (Screens 8, 9, 10, 11, 12, 13)
+       ============================================================ -->
+  <section id="view-control-room" class="view-section">
+    <div class="control-room-layout">
+      
+      <!-- Side Nav -->
+      <nav class="side-nav">
+        <div class="side-nav-brand">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="material-symbols-outlined" style="color: var(--color-primary-bright); font-size: 26px;">alt_route</span>
+            <h2 class="font-display" style="font-size: 20px; font-weight: 700; color: #FFF; letter-spacing: -0.02em;">ROUTE-IQ</h2>
+          </div>
+          <p class="label-caps" style="color: var(--color-primary); margin-top: 4px;">CONTROL ROOM</p>
+          <p class="data-mono" style="font-size: 11px; color: var(--text-muted);">Sector North</p>
+        </div>
+
+        <div class="nav-links">
+          <a href="#" class="nav-item active" data-tab="tab-overview">
+            <span class="material-symbols-outlined">dashboard</span> Overview
+          </a>
+          <a href="#" class="nav-item" data-tab="tab-incidents">
+            <span class="material-symbols-outlined">warning</span> Incidents
+          </a>
+          <a href="#" class="nav-item" data-tab="tab-vehicles">
+            <span class="material-symbols-outlined">local_shipping</span> Vehicles
+          </a>
+          <a href="#" class="nav-item" data-tab="tab-routes">
+            <span class="material-symbols-outlined">route</span> Route Intelligence
+          </a>
+          <a href="#" class="nav-item" data-tab="tab-deliveries">
+            <span class="material-symbols-outlined">medical_services</span> Deliveries
+          </a>
+          <a href="#" class="nav-item" data-tab="tab-alerts">
+            <span class="material-symbols-outlined">notifications</span> Alerts
+          </a>
+          <a href="#" class="nav-item" data-tab="tab-audit">
+            <span class="material-symbols-outlined">history</span> Audit Trail
+          </a>
+          <a href="#" class="nav-item" data-tab="tab-settings">
+            <span class="material-symbols-outlined">settings</span> Settings
+          </a>
+        </div>
+
+        <div style="padding: 16px 20px; border-top: 1px solid var(--border-outline); display: flex; align-items: center; justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--bg-surface-high); border: 1px solid var(--border-outline); display: flex; align-items: center; justify-content: center; color: var(--color-primary);">
+              <span class="material-symbols-outlined" style="font-size: 18px;">person</span>
+            </div>
+            <div>
+              <div class="data-mono" style="font-size: 12px; color: #FFF; font-weight: bold;">CR-01</div>
+              <div style="font-size: 10px; color: var(--text-muted); text-transform: uppercase;">Command Officer</div>
+            </div>
+          </div>
+          <button class="btn-icon" onclick="window.RouteIQ.logout()" title="Logout">
+            <span class="material-symbols-outlined" style="font-size: 16px;">logout</span>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Main Content Area -->
+      <div class="cr-main-area">
+        
+        <!-- Top App Bar -->
+        <header class="cr-topbar">
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <h2 class="font-display" style="font-size: 18px; color: #FFF;">Regional Sector North Overview</h2>
+            <div class="badge-status badge-verified">
+              <span class="pulse-circle" style="width: 6px; height: 6px;"></span>
+              SYSTEM OPERATIONAL
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <span class="data-mono" style="color: var(--text-on-surface-variant); font-size: 12px;">14:35:22 UTC</span>
+            <button class="btn-icon" onclick="window.RouteIQ.switchCRTab('tab-alerts')">
+              <span class="material-symbols-outlined" style="font-size: 18px;">notifications</span>
+            </button>
+            <button class="btn-icon" onclick="window.RouteIQ.switchCRTab('tab-settings')">
+              <span class="material-symbols-outlined" style="font-size: 18px;">settings</span>
+            </button>
+          </div>
+        </header>
+
+        <!-- Scrollable Content Canvas -->
+        <div class="cr-content-scroll">
+          
+          <!-- ================= TAB: OVERVIEW (Screen 8 & 9) ================= -->
+          <div id="tab-overview" class="cr-tab-pane" style="display: flex; flex-direction: column; gap: 20px;">
+            
+            <!-- 5-Card KPI Strip -->
+            <div class="kpi-strip">
+              <!-- KPI 1 -->
+              <div class="glass-panel kpi-card interactive-glow">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                  <span class="label-caps">ACTIVE INCIDENTS</span>
+                  <span class="material-symbols-outlined" style="color: var(--color-critical); font-size: 20px;">warning</span>
+                </div>
+                <div class="kpi-value" id="kpi-active-incidents" style="color: var(--color-critical);">3</div>
+                <div style="font-size: 11px; color: var(--text-on-surface-variant);">
+                  <strong style="color: var(--color-critical);">1 CRITICAL</strong> · 2 HIGH
+                </div>
+              </div>
+
+              <!-- KPI 2 -->
+              <div class="glass-panel kpi-card interactive-glow">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                  <span class="label-caps">AFFECTED VEHICLES</span>
+                  <span class="material-symbols-outlined" style="color: var(--color-warning); font-size: 20px;">local_shipping</span>
+                </div>
+                <div class="kpi-value" style="color: var(--color-warning);">8</div>
+                <div style="font-size: 11px; color: var(--text-on-surface-variant);">5 Active · 3 Delayed</div>
+              </div>
+
+              <!-- KPI 3 -->
+              <div class="glass-panel kpi-card interactive-glow" style="border-color: rgba(0, 206, 209, 0.4);">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                  <span class="label-caps">CRITICAL DELIVERIES</span>
+                  <span class="material-symbols-outlined" style="color: var(--color-primary-bright); font-size: 20px;">medical_services</span>
+                </div>
+                <div class="kpi-value" style="color: var(--color-primary-bright);">2</div>
+                <div style="font-size: 11px; color: var(--text-on-surface-variant);">
+                  <strong style="color: var(--color-primary-bright);">1 At Risk</strong> · 1 Delayed
+                </div>
+              </div>
+
+              <!-- KPI 4 -->
+              <div class="glass-panel kpi-card interactive-glow">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                  <span class="label-caps">ROUTES IMPACTED</span>
+                  <span class="material-symbols-outlined" style="color: var(--text-on-surface-variant); font-size: 20px;">alt_route</span>
+                </div>
+                <div class="kpi-value" style="color: #FFF;">4</div>
+                <div style="font-size: 11px; color: var(--text-on-surface-variant);">2 Blocked · 2 Restricted</div>
+              </div>
+
+              <!-- KPI 5 -->
+              <div class="glass-panel kpi-card interactive-glow">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                  <span class="label-caps">PENDING VERIFICATION</span>
+                  <span class="material-symbols-outlined" style="color: var(--text-muted); font-size: 20px;">pending_actions</span>
+                </div>
+                <div class="kpi-value" id="kpi-pending-verification" style="color: var(--color-high-risk);">5</div>
+                <div style="font-size: 11px; color: var(--text-on-surface-variant);">3 High · 2 Medium</div>
+              </div>
+            </div>
+
+            <!-- Operations Grid: Map + Right Action Feeds -->
+            <div class="cr-operations-grid">
+              
+              <!-- Left: Live Operations Map -->
+              <div class="glass-panel" style="display: flex; flex-direction: column; overflow: hidden; height: 560px;">
+                <div style="padding: 12px 16px; background: var(--bg-input); border-bottom: 1px solid var(--border-outline); display: flex; justify-content: space-between; align-items: center;">
+                  <span class="label-caps">LIVE OPERATIONS MAP · SECTOR NORTH</span>
+                  <div style="display: flex; gap: 8px;">
+                    <button class="btn-secondary" style="padding: 4px 10px; font-size: 10px;" onclick="window.RouteIQ.fitActiveRoute()">FIT ACTIVE ROUTE</button>
+                    <button class="btn-secondary" style="padding: 4px 10px; font-size: 10px;" onclick="window.RouteIQ.centerVehicle()">FOCUS TRK-104</button>
+                  </div>
+                </div>
+                <div style="flex: 1; position: relative;">
+                  <div id="cr-map-container" style="width: 100%; height: 100%;"></div>
+                </div>
+              </div>
+
+              <!-- Right: Command Priority + Recent Incidents -->
+              <div style="display: flex; flex-direction: column; gap: 16px;">
+                
+                <!-- Command Priority Card -->
+                <div class="glass-panel" style="border: 1px solid rgba(255, 180, 171, 0.5); background: linear-gradient(135deg, rgba(147, 0, 10, 0.25) 0%, rgba(22, 29, 29, 0.8) 100%); padding: 16px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span class="label-caps" style="color: var(--color-critical);">COMMAND PRIORITY</span>
+                    <span class="material-symbols-outlined" style="color: var(--color-critical); font-size: 18px;">priority_high</span>
+                  </div>
+                  <h3 class="font-display" style="font-size: 16px; color: #FFF; margin-bottom: 8px;">CRITICAL ATTENTION REQUIRED</h3>
+                  <div style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: var(--text-on-surface-variant); margin-bottom: 14px;">
+                    <div><span class="data-mono" style="color: var(--color-primary-bright);">TRK-104</span> affected by S82 closure.</div>
+                    <div>Cargo: <strong style="color: #FFF;">Life-saving medicines</strong></div>
+                    <div>Route A: <span class="badge-status badge-critical">BLOCKED</span></div>
+                    <div>Route B: <span class="badge-status badge-recommended">RECOMMENDED</span></div>
+                  </div>
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                    <button id="btn-cr-review-incident" class="btn-primary" style="padding: 10px; font-size: 11px;">REVIEW INCIDENT</button>
+                    <button id="btn-cr-view-vehicle" class="btn-secondary" style="padding: 10px; font-size: 11px;">VIEW VEHICLE</button>
+                  </div>
+                </div>
+
+                <!-- Recent Incidents Feed -->
+                <div class="glass-panel" style="flex: 1; display: flex; flex-direction: column; overflow: hidden; padding: 16px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <span class="label-caps">RECENT INCIDENTS</span>
+                    <a href="#" style="font-size: 11px; color: var(--color-primary); text-decoration: none;" onclick="window.RouteIQ.switchCRTab('tab-incidents')">VIEW ALL</a>
+                  </div>
+                  <div id="cr-recent-incidents-feed" style="overflow-y: auto; flex: 1;">
+                    <!-- Rendered by control-room.js -->
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- ================= TAB: ROUTE INTELLIGENCE (Screen 10) ================= -->
+          <div id="tab-routes" class="cr-tab-pane" style="display: none; flex-direction: column; gap: 20px;">
+            
+            <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+              <div>
+                <h2 class="font-display" style="font-size: 22px; color: #FFF; display: flex; align-items: center; gap: 10px;">
+                  ROUTE INTELLIGENCE
+                  <span class="badge-status badge-verified">TRK-104</span>
+                </h2>
+                <p style="font-size: 13px; color: var(--text-on-surface-variant); margin-top: 2px;">
+                  Cargo: <span style="color: var(--color-warning);">Life-saving medicines</span> · Destination: Remote Hospital, Sector North
+                </p>
+              </div>
+              <button class="btn-secondary" onclick="alert('Route risk matrices recalculated against latest meteorological radar & active telemetry.')">
+                <span class="material-symbols-outlined">sync</span> REFRESH DATA
+              </button>
+            </div>
+
+            <!-- Route Comparison Table -->
+            <div class="glass-panel" style="overflow-x: auto;">
+              <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                  <tr style="background: rgba(22, 29, 29, 0.8); border-bottom: 1px solid var(--border-outline);">
+                    <th class="label-caps" style="padding: 12px 16px;">Route</th>
+                    <th class="label-caps" style="padding: 12px 16px;">Risk Score</th>
+                    <th class="label-caps" style="padding: 12px 16px;">ETA</th>
+                    <th class="label-caps" style="padding: 12px 16px;">Distance</th>
+                    <th class="label-caps" style="padding: 12px 16px;">Status</th>
+                    <th class="label-caps" style="padding: 12px 16px;">Why Recommended / Notes</th>
+                  </tr>
+                </thead>
+                <tbody class="data-mono" style="font-size: 13px;">
+                  <tr style="border-bottom: 1px solid rgba(30, 41, 59, 0.4);">
+                    <td style="padding: 14px 16px; font-weight: bold; color: #FFF;">Route A</td>
+                    <td style="padding: 14px 16px; color: var(--color-critical);">⚠ 90 / 100</td>
+                    <td style="padding: 14px 16px; color: var(--text-on-surface-variant);">4h 35m</td>
+                    <td style="padding: 14px 16px; color: var(--text-on-surface-variant);">182 km</td>
+                    <td style="padding: 14px 16px;"><span class="badge-status badge-critical">BLOCKED</span></td>
+                    <td style="padding: 14px 16px; font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-on-surface-variant);">Blocked due to verified landslide on S82</td>
+                  </tr>
+                  <tr style="background: rgba(0, 206, 209, 0.08); border-bottom: 1px solid var(--color-primary);">
+                    <td style="padding: 14px 16px; font-weight: bold; color: var(--color-primary-bright);">Route B ★</td>
+                    <td style="padding: 14px 16px; color: var(--color-primary-bright); font-weight: bold;">✔ 35 / 100</td>
+                    <td style="padding: 14px 16px; color: #FFF; font-weight: bold;">4h 25m</td>
+                    <td style="padding: 14px 16px; color: #FFF; font-weight: bold;">186 km</td>
+                    <td style="padding: 14px 16px;"><span class="badge-status badge-recommended">RECOMMENDED</span></td>
+                    <td style="padding: 14px 16px; font-family: 'Inter', sans-serif; font-size: 13px; color: #FFF;">Open • Compatible • No active disruptions</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid rgba(30, 41, 59, 0.4);">
+                    <td style="padding: 14px 16px; font-weight: bold; color: #FFF;">Route C</td>
+                    <td style="padding: 14px 16px; color: var(--color-warning);">ℹ 55 / 100</td>
+                    <td style="padding: 14px 16px; color: var(--text-on-surface-variant);">5h 10m</td>
+                    <td style="padding: 14px 16px; color: var(--text-on-surface-variant);">214 km</td>
+                    <td style="padding: 14px 16px;"><span class="badge-status badge-warning">ALTERNATIVE</span></td>
+                    <td style="padding: 14px 16px; font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-on-surface-variant);">Longer route • Moderate risk • Usable</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 14px 16px; font-weight: bold; color: #FFF;">Route D</td>
+                    <td style="padding: 14px 16px; color: var(--color-purple);">✔ 20 / 100</td>
+                    <td style="padding: 14px 16px; color: var(--text-on-surface-variant);">5h 45m</td>
+                    <td style="padding: 14px 16px; color: var(--text-on-surface-variant);">235 km</td>
+                    <td style="padding: 14px 16px;"><span class="badge-status badge-emergency">EMERGENCY ONLY</span></td>
+                    <td style="padding: 14px 16px; font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-on-surface-variant);">Restricted to auxiliary emergency convoys</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Deep Dive Grid: Risk Breakdown & Why Recommended -->
+            <div style="display: grid; grid-template-columns: 7fr 5fr; gap: 20px;">
+              
+              <!-- Risk Breakdown (Route B) -->
+              <div class="glass-panel" style="padding: 20px; display: flex; flex-direction: column;">
+                <span class="label-caps" style="margin-bottom: 16px;">RISK BREAKDOWN (Route B)</span>
+                <div style="display: flex; align-items: center; gap: 28px;">
+                  <!-- Radial Gauge -->
+                  <div style="position: relative; width: 140px; height: 140px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                    <svg style="width: 100%; height: 100%; transform: rotate(-90deg);" viewBox="0 0 100 100">
+                      <circle cx="50" cy="50" r="42" fill="none" stroke="#242B2B" stroke-width="8" />
+                      <circle cx="50" cy="50" r="42" fill="none" stroke="#00CED1" stroke-width="8" stroke-dasharray="264" stroke-dashoffset="171" stroke-linecap="round" />
+                    </svg>
+                    <div style="position: absolute; text-align: center;">
+                      <div style="font-family: 'Inter', sans-serif; font-size: 32px; font-weight: 700; color: var(--color-primary-bright); line-height: 1;">35</div>
+                      <div class="data-mono" style="font-size: 10px; color: var(--text-muted);">/ 100</div>
+                      <span class="badge-status badge-recommended" style="font-size: 9px; margin-top: 4px;">LOWER RISK</span>
+                    </div>
+                  </div>
+
+                  <!-- 5 Sub-metric Bars -->
+                  <div style="flex: 1; display: flex; flex-direction: column; gap: 10px; font-family: 'JetBrains Mono', monospace; font-size: 12px;">
+                    <div>
+                      <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+                        <span style="color: var(--text-on-surface-variant);">Weather Risk</span>
+                        <span style="color: #FFF;">10 / 30</span>
+                      </div>
+                      <div style="height: 6px; background: #242B2B; border-radius: 3px; overflow: hidden;">
+                        <div style="width: 33%; height: 100%; background: var(--color-primary);"></div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+                        <span style="color: var(--text-on-surface-variant);">Terrain Risk</span>
+                        <span style="color: #FFF;">8 / 25</span>
+                      </div>
+                      <div style="height: 6px; background: #242B2B; border-radius: 3px; overflow: hidden;">
+                        <div style="width: 32%; height: 100%; background: var(--color-primary);"></div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+                        <span style="color: var(--text-on-surface-variant);">Road Condition</span>
+                        <span style="color: #FFF;">7 / 25</span>
+                      </div>
+                      <div style="height: 6px; background: #242B2B; border-radius: 3px; overflow: hidden;">
+                        <div style="width: 28%; height: 100%; background: var(--color-primary);"></div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+                        <span style="color: var(--text-on-surface-variant);">Active Disruption</span>
+                        <span style="color: #FFF;">5 / 15</span>
+                      </div>
+                      <div style="height: 6px; background: #242B2B; border-radius: 3px; overflow: hidden;">
+                        <div style="width: 33%; height: 100%; background: var(--color-primary);"></div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+                        <span style="color: var(--text-on-surface-variant);">Historical Risk</span>
+                        <span style="color: #FFF;">5 / 15</span>
+                      </div>
+                      <div style="height: 6px; background: #242B2B; border-radius: 3px; overflow: hidden;">
+                        <div style="width: 33%; height: 100%; background: var(--text-on-surface-variant);"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Why Route B is Recommended -->
+              <div class="glass-panel" style="padding: 20px; display: flex; flex-direction: column; justify-content: space-between; border-color: var(--color-primary);">
+                <div>
+                  <span class="label-caps" style="color: var(--color-primary-bright); margin-bottom: 14px; display: block;">WHY ROUTE B IS RECOMMENDED?</span>
+                  <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <span class="material-symbols-outlined" style="color: var(--color-primary-bright); font-size: 18px;">check_circle</span>
+                      <span>Route is <strong style="color: #FFF;">open and drivable</strong></span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <span class="material-symbols-outlined" style="color: var(--color-primary-bright); font-size: 18px;">check_circle</span>
+                      <span>Compatible with <strong style="color: #FFF;">TRK-104 (Heavy 4x4 Truck)</strong></span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <span class="material-symbols-outlined" style="color: var(--color-primary-bright); font-size: 18px;">check_circle</span>
+                      <span><strong style="color: #FFF;">No verified disruptions</strong> ahead</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <span class="material-symbols-outlined" style="color: var(--color-primary-bright); font-size: 18px;">check_circle</span>
+                      <span>Acceptable <strong style="color: #FFF;">ETA and distance</strong></span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <span class="material-symbols-outlined" style="color: var(--color-primary-bright); font-size: 18px;">check_circle</span>
+                      <span>Suitable for <strong style="color: var(--color-warning);">critical medical cargo</strong></span>
+                    </div>
+                  </div>
+                </div>
+
+                <button id="btn-transmit-route-b" class="btn-primary" style="margin-top: 20px; width: 100%; padding: 14px;">
+                  <span class="material-symbols-outlined">send</span> CONFIRM & TRANSMIT ROUTE
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- ================= TAB: INCIDENTS ================= -->
+          <div id="tab-incidents" class="cr-tab-pane" style="display: none; flex-direction: column; gap: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+              <div>
+                <h2 class="font-display" style="font-size: 20px; color: #FFF; margin: 0;">Incident Management & Verification Queue</h2>
+                <div style="font-size: 12px; color: var(--text-on-surface-variant); margin-top: 4px;">Human-in-the-loop operational validation pipeline with photographic evidence.</div>
+              </div>
+              <div style="display: flex; gap: 10px; align-items: center;">
+                <label class="label-caps" style="font-size: 11px; margin: 0;">FILTER:</label>
+                <select id="select-incident-filter" class="input-control" style="padding: 6px 12px; font-size: 12px; width: 180px; background: var(--bg-input); border: 1px solid var(--border-outline); border-radius: var(--radius-sm);">
+                  <option value="ALL">ALL STATUSES</option>
+                  <option value="UNDER_VERIFICATION">UNDER VERIFICATION</option>
+                  <option value="VERIFIED">VERIFIED</option>
+                  <option value="ACTIONED">ACTIONED</option>
+                  <option value="REJECTED">REJECTED</option>
+                </select>
+              </div>
+            </div>
+            <div class="glass-panel" style="padding: 16px; overflow-x: auto;">
+              <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                  <tr style="border-bottom: 1px solid var(--border-outline);">
+                    <th class="label-caps" style="padding: 10px;">ID</th>
+                    <th class="label-caps" style="padding: 10px;">Type</th>
+                    <th class="label-caps" style="padding: 10px;">Segment</th>
+                    <th class="label-caps" style="padding: 10px;">Severity</th>
+                    <th class="label-caps" style="padding: 10px;">Status</th>
+                    <th class="label-caps" style="padding: 10px;">Reported By</th>
+                    <th class="label-caps" style="padding: 10px;">Time</th>
+                    <th class="label-caps" style="padding: 10px;">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="cr-incidents-table-body" class="data-mono" style="font-size: 12px;">
+                  <!-- Rendered dynamically by control-room.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- ================= TAB: VEHICLES (Screen 11) ================= -->
+          <div id="tab-vehicles" class="cr-tab-pane" style="display: none; flex-direction: column; gap: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+              <div>
+                <h2 class="font-display" style="font-size: 20px; color: #FFF; margin: 0;">Multi-Fleet Vehicle & Crew Matrix</h2>
+                <div style="font-size: 12px; color: var(--text-on-surface-variant); margin-top: 4px;">Real-time telemetry, driver credentials, cargo manifests, and cold-chain status.</div>
+              </div>
+              <div class="input-field-wrapper" style="max-width: 280px; width: 100%;">
+                <span class="material-symbols-outlined input-icon">search</span>
+                <input type="text" id="input-search-vehicles" class="input-control" placeholder="Search driver, truck, cargo..." style="padding: 8px 12px 8px 36px; font-size: 12px; background: var(--bg-input); border: 1px solid var(--border-outline); border-radius: var(--radius-sm);" />
+              </div>
+            </div>
+            <div class="glass-panel" style="padding: 16px; overflow-x: auto;">
+              <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                  <tr style="border-bottom: 1px solid var(--border-outline);">
+                    <th class="label-caps" style="padding: 10px;">Vehicle & Plate</th>
+                    <th class="label-caps" style="padding: 10px;">Driver & Comms</th>
+                    <th class="label-caps" style="padding: 10px;">Cargo Manifest & Weight</th>
+                    <th class="label-caps" style="padding: 10px;">Assigned Route</th>
+                    <th class="label-caps" style="padding: 10px;">ETA</th>
+                    <th class="label-caps" style="padding: 10px;">Cold Chain</th>
+                    <th class="label-caps" style="padding: 10px;">Status</th>
+                    <th class="label-caps" style="padding: 10px;">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="cr-vehicles-table-body" class="data-mono" style="font-size: 12px;">
+                  <!-- Rendered dynamically by control-room.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- ================= TAB: DELIVERIES (Screen 12) ================= -->
+          <div id="tab-deliveries" class="cr-tab-pane" style="display: none; flex-direction: column; gap: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <h2 class="font-display" style="font-size: 20px; color: #FFF; margin: 0;">Critical Shipments & Cold-Chain Manifests</h2>
+                <div style="font-size: 12px; color: var(--text-on-surface-variant); margin-top: 4px;">Live consignment milestones, temperature graphs, and facility endpoints.</div>
+              </div>
+            </div>
+            <div id="cr-deliveries-list" style="display: flex; flex-direction: column; gap: 14px;">
+              <!-- Rendered dynamically by control-room.js -->
+            </div>
+          </div>
+
+          <!-- ================= TAB: ALERTS (Screen 13) ================= -->
+          <div id="tab-alerts" class="cr-tab-pane" style="display: none; flex-direction: column; gap: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <h2 class="font-display" style="font-size: 20px; color: #FFF; margin: 0;">Emergency Alert Center & Tactical Broadcasts</h2>
+                <div style="font-size: 12px; color: var(--text-on-surface-variant); margin-top: 4px;">Mesh transmission network broadcasting high-priority bulletins to drivers & recon units.</div>
+              </div>
+            </div>
+            
+            <!-- Create Broadcast -->
+            <div class="glass-panel" style="padding: 18px;">
+              <span class="label-caps" style="display: block; margin-bottom: 10px; color: var(--color-primary-bright);">TRANSMIT SECTOR EMERGENCY BROADCAST</span>
+              <form id="form-emergency-broadcast" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <input type="text" id="broadcast-title" class="input-control" placeholder="Enter emergency alert message for sector units..." required style="flex: 1; min-width: 260px; background: var(--bg-input); border: 1px solid var(--border-outline); border-radius: var(--radius-sm);" />
+                <select id="broadcast-category" class="input-control" style="width: 150px; background: var(--bg-input); border: 1px solid var(--border-outline); border-radius: var(--radius-sm);">
+                  <option value="CRITICAL">CRITICAL</option>
+                  <option value="HIGH">HIGH</option>
+                  <option value="MEDIUM">MEDIUM</option>
+                  <option value="ADVISORY">ADVISORY</option>
+                </select>
+                <button type="submit" class="btn-danger" style="display: flex; align-items: center; gap: 6px;">
+                  <span class="material-symbols-outlined" style="font-size: 16px;">broadcast_on_personal</span> TRANSMIT
+                </button>
+              </form>
+            </div>
+
+            <!-- Alerts List -->
+            <div class="glass-panel" style="padding: 18px;">
+              <span class="label-caps" style="display: block; margin-bottom: 14px;">ACTIVE SECTOR BROADCAST LOG</span>
+              <div id="cr-alerts-container" style="display: flex; flex-direction: column; gap: 8px;">
+                <!-- Rendered dynamically by control-room.js -->
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= TAB: AUDIT TRAIL ================= -->
+          <div id="tab-audit" class="cr-tab-pane" style="display: none; flex-direction: column; gap: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <h2 class="font-display" style="font-size: 20px; color: #FFF; margin: 0;">Immutable Operational Audit Trail</h2>
+                <div style="font-size: 12px; color: var(--text-on-surface-variant); margin-top: 4px;">Cryptographically timestamped record of every human decision and system calculation.</div>
+              </div>
+            </div>
+            <div class="glass-panel" style="padding: 16px; overflow-x: auto;">
+              <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                  <tr style="border-bottom: 1px solid var(--border-outline);">
+                    <th class="label-caps" style="padding: 10px 14px;">Time (UTC)</th>
+                    <th class="label-caps" style="padding: 10px 14px;">Actor</th>
+                    <th class="label-caps" style="padding: 10px 14px;">Action Tag</th>
+                    <th class="label-caps" style="padding: 10px 14px;">Entity ID</th>
+                    <th class="label-caps" style="padding: 10px 14px;">Operational Log Notes</th>
+                  </tr>
+                </thead>
+                <tbody id="cr-audit-log-rows">
+                  <!-- Rendered by control-room.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- ================= TAB: SETTINGS ================= -->
+          <div id="tab-settings" class="cr-tab-pane" style="display: none; flex-direction: column; gap: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <h2 class="font-display" style="font-size: 20px; color: #FFF; margin: 0;">System Configuration & Risk Parameters</h2>
+                <div style="font-size: 12px; color: var(--text-on-surface-variant); margin-top: 4px;">Adjust real-time multi-factor algorithmic weightings and Doppler radar triggers.</div>
+              </div>
+            </div>
+            <div class="glass-panel" style="padding: 24px; display: flex; flex-direction: column; gap: 20px; max-width: 720px;">
+              <div>
+                <label class="label-caps" style="color: var(--color-primary-bright); margin-bottom: 8px; display: block;">METEOROLOGICAL TELEMETRY THRESHOLDS</label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                  <div class="input-group">
+                    <label class="label-caps" style="font-size: 11px;">CRITICAL PRECIPITATION THRESHOLD (mm/24h)</label>
+                    <input type="number" id="input-rain-threshold" class="input-control" value="70" style="background: var(--bg-input); border: 1px solid var(--border-outline); border-radius: var(--radius-sm);" />
+                  </div>
+                  <div class="input-group">
+                    <label class="label-caps" style="font-size: 11px;">RADAR WEATHER WEIGHT (%)</label>
+                    <input type="number" id="input-weather-weight" class="input-control" value="30" style="background: var(--bg-input); border: 1px solid var(--border-outline); border-radius: var(--radius-sm);" />
+                  </div>
+                </div>
+              </div>
+
+              <div style="border-top: 1px solid var(--border-outline); padding-top: 18px;">
+                <label class="label-caps" style="color: var(--color-primary-bright); margin-bottom: 8px; display: block;">TERRAIN & ROAD SURFACE PARAMETERS</label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                  <div class="input-group">
+                    <label class="label-caps" style="font-size: 11px;">TERRAIN SLOPE & ELEVATION WEIGHT (%)</label>
+                    <input type="number" id="input-terrain-weight" class="input-control" value="25" style="background: var(--bg-input); border: 1px solid var(--border-outline); border-radius: var(--radius-sm);" />
+                  </div>
+                  <div class="input-group">
+                    <label class="label-caps" style="font-size: 11px;">ROAD SURFACE INTEGRITY WEIGHT (%)</label>
+                    <input type="number" id="input-road-weight" class="input-control" value="25" style="background: var(--bg-input); border: 1px solid var(--border-outline); border-radius: var(--radius-sm);" />
+                  </div>
+                </div>
+              </div>
+
+              <button type="button" id="btn-save-risk-config" class="btn-primary" style="margin-top: 10px; width: 100%; padding: 12px;">
+                <span class="material-symbols-outlined">save</span> SAVE & RECALIBRATE ROUTE RISK ENGINE
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       MODALS & OVERLAYS
+       ============================================================ -->
+
+  <!-- Modal 1: Incident Details & Verification Sheet -->
+  <div id="modal-incident-details" class="modal-backdrop">
+    <div class="modal-sheet">
+      <div style="padding: 16px 20px; background: var(--bg-input); border-bottom: 1px solid var(--border-outline); display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span class="data-mono" id="modal-inc-id" style="color: var(--color-critical); font-size: 18px; font-weight: 700;">INC-1024</span>
+          <span class="badge-status badge-critical" id="modal-inc-severity">HIGH</span>
+          <span class="badge-status badge-verified" id="modal-inc-status">VERIFIED</span>
+        </div>
+        <button id="btn-close-incident-modal" class="btn-icon">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <div style="padding: 20px; display: flex; flex-direction: column; gap: 16px;">
+        <div>
+          <div style="font-size: 20px; font-weight: 700; color: #FFF;" id="modal-inc-type">Landslide</div>
+          <div class="data-mono" style="font-size: 12px; color: var(--color-primary); margin-top: 2px;" id="modal-inc-road">NH-S82 (Milestone 14.2)</div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px;">
+          <div>Reported By: <strong style="color: #FFF;" id="modal-inc-reporter">FO-104</strong></div>
+          <div>Reported Time: <strong style="color: #FFF;" id="modal-inc-time">14:25 UTC</strong></div>
+          <div style="grid-column: span 2;">Coordinates: <strong style="color: var(--color-primary);" id="modal-inc-coords">27.34567° N, 92.45678° E</strong></div>
+        </div>
+
+        <div>
+          <span class="label-caps" style="display: block; margin-bottom: 6px;">FIELD OBSERVATION</span>
+          <div id="modal-inc-desc" style="font-size: 13px; color: #DDE4E3; background: rgba(22, 29, 29, 0.6); padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-outline);">
+            Large boulders and mudflow blocking the road. Impassable.
+          </div>
+        </div>
+
+        <div>
+          <span class="label-caps" style="display: block; margin-bottom: 6px;">ATTACHED EVIDENCE PHOTOS</span>
+          <div id="modal-inc-photos" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <!-- Photos rendered dynamically -->
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; margin-top: 10px;">
+          <button id="btn-action-verify-incident" class="btn-primary" style="flex: 1;">
+            <span class="material-symbols-outlined">check_circle</span> VERIFY INCIDENT (MARK BLOCKED)
+          </button>
+          <button id="btn-action-reject-incident" class="btn-danger" style="flex: 1;">
+            <span class="material-symbols-outlined">cancel</span> REJECT
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Disruption Report Modal (for Driver) -->
+  <div id="modal-disruption-report" class="modal-backdrop">
+    <div class="modal-sheet" style="max-width: 520px;">
+      <div style="padding: 16px 20px; background: var(--bg-input); border-bottom: 1px solid var(--border-outline); display: flex; justify-content: space-between; align-items: center;">
+        <span class="label-caps" style="color: var(--color-critical);">DISRUPTION REPORT · INC-1024</span>
+        <button id="btn-close-disruption-modal" class="btn-icon">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <div style="padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+        <div style="font-size: 18px; font-weight: 700; color: #FFF;">Landslide on Road Segment NH-S82</div>
+        <div style="font-size: 13px; color: var(--text-on-surface-variant);">
+          Route A is completely blocked by a 45-tonne rockfall at Milestone 14.2. Control Room has verified the obstruction and transmitted Route B (Ridge Bypass) as your active safe corridor.
+        </div>
+        <div style="height: 180px; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border-outline);">
+          <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80" alt="Obstruction" style="width: 100%; height: 100%; object-fit: cover;" />
+        </div>
+        <button class="btn-primary" onclick="document.getElementById('modal-disruption-report').classList.remove('open')" style="width: 100%;">
+          ACKNOWLEDGE & CLOSE
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Driver Hazard Report Modal with Photo Upload -->
+  <div id="modal-driver-hazard" class="modal-backdrop">
+    <div class="modal-sheet" style="max-width: 540px;">
+      <div style="padding: 16px 20px; background: var(--bg-input); border-bottom: 1px solid var(--border-outline); display: flex; justify-content: space-between; align-items: center;">
+        <span class="label-caps" style="color: var(--color-primary-bright);">DRIVER DIRECT HAZARD REPORT</span>
+        <button id="btn-close-driver-hazard" class="btn-icon">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <form id="form-driver-hazard" style="padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+        <div class="input-group">
+          <label class="label-caps">HAZARD CLASSIFICATION</label>
+          <select id="driver-hazard-type" class="input-control" style="background: var(--bg-input); border: 1px solid var(--border-outline); border-radius: var(--radius-sm);">
+            <option value="Landslide">Landslide / Rockfall</option>
+            <option value="Flood">Flash Flood / Causeway Overflow</option>
+            <option value="Road Blockage">Tree Fall / Road Blockage</option>
+            <option value="Bridge Damage">Bridge Damage / Structural Defect</option>
+            <option value="Accident">Accident Obstruction</option>
+            <option value="Other">Other Operational Hazard</option>
+          </select>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0, 206, 209, 0.1); padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid rgba(0, 206, 209, 0.3);">
+          <span class="data-mono" style="font-size: 11px; color: #FFF;">GPS: 27.2845° N, 92.3812° E (TRK-104 Lock)</span>
+          <span class="badge-status badge-verified">● GPS LOCKED (10m)</span>
+        </div>
+
+        <!-- Photo Upload Drag-and-Drop & Presets -->
+        <div class="input-group">
+          <label class="label-caps">ATTACH PHOTOGRAPHIC EVIDENCE</label>
+          <input type="file" id="driver-hazard-file" accept="image/*" style="display: none;" />
+          <div id="driver-dropzone" class="file-dropzone" style="border: 2px dashed var(--border-outline); border-radius: var(--radius-sm); padding: 20px; text-align: center; cursor: pointer; background: rgba(0,0,0,0.2); transition: all 0.2s;">
+            <span class="material-symbols-outlined" style="font-size: 28px; color: var(--color-primary-bright);">add_a_photo</span>
+            <div style="font-size: 12px; color: #FFF; font-weight: 600; margin-top: 4px;">Click to upload or take photo</div>
+            <div style="font-size: 10px; color: var(--text-muted); margin-top: 2px;">Supports JPG, PNG, WebP or mobile camera capture</div>
+          </div>
+
+          <div id="driver-photo-presets" style="margin-top: 10px;"></div>
+          <div id="driver-photo-preview" style="display: none;"></div>
+        </div>
+
+        <div class="input-group">
+          <label class="label-caps">OBSERVATION DETAILS</label>
+          <textarea id="driver-hazard-desc" class="input-control" rows="3" placeholder="Describe obstruction size, passability, water depth..." style="background: var(--bg-input); border: 1px solid var(--border-outline); border-radius: var(--radius-sm);"></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 6px; padding: 12px;">
+          <span class="material-symbols-outlined">send</span> TRANSMIT HAZARD TELEMETRY
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 4: Field Officer Incident Report Modal with Photo Upload -->
+  <div id="modal-field-report" class="modal-backdrop">
+    <div class="modal-sheet" style="max-width: 560px;">
+      <div style="padding: 16px 20px; background: var(--bg-input); border-bottom: 1px solid var(--border-outline); display: flex; justify-content: space-between; align-items: center;">
+        <span class="label-caps" style="color: var(--color-primary-bright);">REPORT NEW FIELD INCIDENT · RECON UNIT</span>
+        <button id="btn-close-field-report" class="btn-icon">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <form id="form-field-incident-report" style="padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+        <div class="input-group">
+          <label class="label-caps">INCIDENT TYPE</label>
+          <select id="field-hazard-type" class="input-control" style="background: var(--bg-input); border: 1px solid var(--border-outline); border-radius: var(--radius-sm);">
+            <option value="Landslide">Landslide / Rockfall</option>
+            <option value="Flash Flood">Flash Flood / Causeway Overflow</option>
+            <option value="Tree Fall Obstruction">Tree Fall Obstruction</option>
+            <option value="Bridge Structural Crack">Bridge Structural Crack</option>
+            <option value="Mudslide">Mudslide / Silt Inundation</option>
+            <option value="Road Washout">Road Washout</option>
+            <option value="Other">Other Tactical Obstruction</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label class="label-caps">ROAD SEGMENT / MILESTONE</label>
+          <input type="text" id="field-road-segment" class="input-control font-mono-val" value="NH-S82 (Milestone 14.2 Pass)" style="background: var(--bg-input); border: 1px solid var(--border-outline); border-radius: var(--radius-sm);" />
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0, 206, 209, 0.1); padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid rgba(0, 206, 209, 0.3);">
+          <span class="data-mono" style="font-size: 11px; color: #FFF;">GPS: 27.34567° N, 92.45678° E</span>
+          <span class="badge-status badge-verified">● GPS LOCKED (±15m)</span>
+        </div>
+
+        <!-- Photo Upload Drag-and-Drop & Presets -->
+        <div class="input-group">
+          <label class="label-caps">ATTACH EVIDENCE PHOTO / RECON SCAN</label>
+          <input type="file" id="field-hazard-file" accept="image/*" style="display: none;" />
+          <div id="field-dropzone" class="file-dropzone" style="border: 2px dashed var(--border-outline); border-radius: var(--radius-sm); padding: 20px; text-align: center; cursor: pointer; background: rgba(0,0,0,0.2); transition: all 0.2s;">
+            <span class="material-symbols-outlined" style="font-size: 28px; color: var(--color-primary-bright);">photo_camera</span>
+            <div style="font-size: 12px; color: #FFF; font-weight: 600; margin-top: 4px;">Click to upload evidence photo</div>
+            <div style="font-size: 10px; color: var(--text-muted); margin-top: 2px;">Attach high-res photo for Command Room verification</div>
+          </div>
+
+          <div id="field-photo-presets" style="margin-top: 10px;"></div>
+          <div id="field-photo-preview" style="display: none;"></div>
+        </div>
+
+        <div class="input-group">
+          <label class="label-caps">FIELD OBSERVATION NOTES</label>
+          <textarea id="field-observation-text" class="input-control" rows="3" placeholder="Describe blockage dimensions, vehicle class passability..." style="background: var(--bg-input); border: 1px solid var(--border-outline); border-radius: var(--radius-sm);">Massive rockfall with 45-tonne boulder coverage. Both lanes completely blocked.</textarea>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 6px; padding: 12px;">
+          <span class="material-symbols-outlined">send</span> TRANSMIT HAZARD REPORT
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 5: Vehicle & Crew Telemetry Details Sheet -->
+  <div id="modal-vehicle-details" class="modal-backdrop">
+    <div class="modal-sheet" style="max-width: 580px;">
+      <div style="padding: 16px 20px; background: var(--bg-input); border-bottom: 1px solid var(--border-outline); display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span class="data-mono" id="modal-veh-id" style="color: var(--color-primary-bright); font-size: 18px; font-weight: 700;">TRK-104</span>
+          <span class="badge-status badge-verified">ACTIVE FLEET</span>
+        </div>
+        <button id="btn-close-vehicle-modal" class="btn-icon">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <div style="padding: 20px; display: flex; flex-direction: column; gap: 16px;">
+        <!-- Driver Profile -->
+        <div style="background: var(--bg-surface-high); border: 1px solid var(--border-outline); padding: 14px; border-radius: var(--radius-sm);">
+          <span class="label-caps" style="color: var(--color-primary-bright); display: block; margin-bottom: 6px;">ASSIGNED DRIVER & CREW</span>
+          <div style="font-size: 16px; font-weight: 700; color: #FFF;" id="modal-veh-driver">Rajesh Kumar (DRV-104)</div>
+          <div style="font-size: 12px; color: var(--text-on-surface-variant); margin-top: 2px;" id="modal-veh-designation">Senior Mountain Logistics Specialist</div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-size: 11px;">
+            <div>Phone: <strong style="color: #FFF;" id="modal-veh-phone">+91 98765-43210</strong></div>
+            <div>Comms: <strong style="color: var(--color-primary);" id="modal-veh-comms">VHF Ch 4</strong></div>
+          </div>
+        </div>
+
+        <!-- Vehicle & Cargo Manifest -->
+        <div>
+          <span class="label-caps" style="display: block; margin-bottom: 6px;">VEHICLE MODEL & SPECIFICATION</span>
+          <div style="font-size: 13px; color: #FFF; font-weight: 600;" id="modal-veh-type">Heavy 4x4 Tactical Logistics Truck (Ashok Leyland Stallion)</div>
+          
+          <div style="margin-top: 10px;">
+            <span class="label-caps" style="display: block; margin-bottom: 4px;">CARGO MANIFEST & WEIGHT</span>
+            <div style="font-size: 13px; color: var(--color-warning); font-weight: 600;" id="modal-veh-cargo">Life-saving medicines (4,200 kg - Category A)</div>
+          </div>
+        </div>
+
+        <!-- Telemetry Gauges -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px; border-top: 1px solid var(--border-outline); padding-top: 14px;">
+          <div>Assigned Route: <strong style="color: var(--color-primary-bright);" id="modal-veh-route">Route B</strong></div>
+          <div>Speed & RPM: <strong style="color: #FFF;" id="modal-veh-speed">38 km/h</strong></div>
+          <div>Fuel & Oil: <strong style="color: #FFF;" id="modal-veh-fuel">86%</strong></div>
+          <div>Cold Chain Temp: <strong style="color: var(--color-success);" id="modal-veh-temp">+4.1°C</strong></div>
+          <div style="grid-column: span 2;">IoT Sensor: <strong style="color: var(--text-on-surface-variant);" id="modal-veh-sensor">Sensirion SHT35</strong></div>
+          <div style="grid-column: span 2;">GPS Coordinates: <strong style="color: var(--color-primary);" id="modal-veh-coords">27.2845° N, 92.3812° E</strong></div>
+        </div>
+
+        <button class="btn-primary" onclick="document.getElementById('modal-vehicle-details').classList.remove('open')" style="width: 100%; margin-top: 6px;">
+          CLOSE TELEMETRY SHEET
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       FLOATING DEMO & MULTI-ROLE TEST BAR
+       ============================================================ -->
+  <aside class="demo-floating-bar" id="demo-quick-bar">
+    <span class="label-caps" style="color: var(--color-primary-bright); font-size: 10px;">ROLE SWITCH:</span>
+    <button type="button" class="demo-chip" onclick="window.RouteIQ.switchRoleView('DRIVER')">Driver (DRV-104)</button>
+    <button type="button" class="demo-chip" onclick="window.RouteIQ.switchRoleView('FIELD_OFFICER')">Field Officer (FO-104)</button>
+    <button type="button" class="demo-chip" onclick="window.RouteIQ.switchRoleView('CONTROL_ROOM')">Control Room (CR-01)</button>
+    <div style="width: 1px; height: 16px; background: var(--border-outline);"></div>
+    <button type="button" class="btn-primary" style="padding: 4px 12px; font-size: 10px;" onclick="window.RouteIQ.runScenarioLoop()">
+      <span class="material-symbols-outlined" style="font-size: 12px;">play_arrow</span> RUN SCENARIO SIMULATION
+    </button>
+    <button type="button" class="demo-chip" onclick="window.RouteIQ.resetState()" title="Reset Demo Data">↺ Reset</button>
+  </aside>
+
+</div>
+
+<!-- Application Main Initializer Script (Vanilla JS ES Module) -->
+<script type="module">
+  import { initAuth, switchView } from '/frontend/auth/auth.js';
+  import { initDriverView } from '/frontend/driver/driver.js';
+  import { initFieldOfficerView } from '/frontend/field-officer/field-officer.js';
+  import { initControlRoomView, switchControlRoomTab, openIncidentDetails, openVehicleDetails } from '/frontend/control-room/control-room.js';
+  import { store } from '/frontend/shared/js/store.js';
+  import { dialog } from '/frontend/shared/js/dialog.js';
+
+  // Global window handle for inline event helpers
+  window.RouteIQ = {
+    logout: () => {
+      dialog.confirm({
+        title: 'CONFIRM SESSION TERMINATION',
+        message: 'Are you sure you want to end your active tactical session and lock the terminal?',
+        confirmText: 'LOGOUT & LOCK',
+        icon: 'logout',
+        onConfirm: () => {
+          store.logout();
+          switchView('view-login');
+          dialog.toast('Session ended. Terminal locked.', 'info');
+        }
+      });
+    },
+    showForgotInfo: () => {
+      dialog.toast('Credential Recovery: Contact Sector North Dispatcher (CR-01) on VHF Ch 4.', 'info', 6000);
+    },
+    switchRoleView: (role) => {
+      if (role === 'DRIVER') {
+        switchView('view-driver');
+        initDriverView();
+      } else if (role === 'FIELD_OFFICER') {
+        switchView('view-field-officer');
+        initFieldOfficerView();
+      } else {
+        switchView('view-control-room');
+        initControlRoomView();
+      }
+    },
+    switchCRTab: (tabId) => {
+      switchControlRoomTab(tabId);
+    },
+    openIncident: (incId) => {
+      openIncidentDetails(incId);
+    },
+    openVehicleDetails: (vId) => {
+      openVehicleDetails(vId);
+    },
+    fitActiveRoute: () => {
+      dialog.toast('Tactical map bounds adjusted to encompass Sector North corridor.', 'info');
+    },
+    centerVehicle: () => {
+      dialog.toast('Map auto-centered on active vehicle TRK-104.', 'info');
+    },
+    resetState: () => {
+      dialog.confirm({
+        title: 'RESET TACTICAL STATE',
+        message: 'Reset all active incidents, telemetries, and manifests to default sector status?',
+        confirmText: 'RESET STATE',
+        icon: 'restart_alt',
+        onConfirm: () => {
+          store.resetDemo();
+          dialog.toast('State reset to default sector scenario.', 'success');
+          location.reload();
+        }
+      });
+    },
+    runScenarioLoop: () => {
+      dialog.toast('Starting Scenario Simulation: Field Officer report -> Control Room verification -> Route B dispatch.', 'info', 4000);
+      
+      const inc = store.reportIncident({
+        type: 'LANDSLIDE',
+        roadSegment: 'NH-S82 Milestone 14.2',
+        severity: 'HIGH',
+        reportedBy: 'FO-104 (Sub-Inspector Vikram Singh)',
+        description: 'Massive landslide blocking both lanes near S82 pass with 45-tonne boulder.'
+      });
+
+      setTimeout(() => {
+        store.verifyIncident(inc.id, true);
+        store.transmitRouteDispatch('TRK-104', 'Route B');
+        dialog.toast('Incident verified by CR-01. Route B dispatched to TRK-104 (Rajesh Kumar).', 'success', 5000);
+        window.RouteIQ.switchRoleView('DRIVER');
+      }, 1400);
+    }
+  };
+
+  // Initialize
+  document.addEventListener('DOMContentLoaded', () => {
+    initAuth((role) => {
+      window.RouteIQ.switchRoleView(role);
+    });
+
+    const state = store.getState();
+    if (state.session.isAuthenticated && state.session.isSecondStageVerified) {
+      window.RouteIQ.switchRoleView(state.session.role);
+    }
+  });
+</script>
+
+</body>
+</html>

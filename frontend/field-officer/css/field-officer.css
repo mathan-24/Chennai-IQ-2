@@ -1,0 +1,20 @@
+/* ROUTE-IQ — Field Officer Recon Module CSS */
+.field-officer-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--bg-base);
+}
+
+.field-officer-nav {
+  display: flex;
+  background: var(--bg-surface-low);
+  border-bottom: 1px solid var(--border-outline);
+  padding: 12px 16px;
+  gap: 12px;
+}
+
+.field-officer-content {
+  flex: 1;
+  padding: 16px;
+}

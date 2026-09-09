@@ -1,0 +1,27 @@
+/* ROUTE-IQ — Driver In-Cab Module CSS */
+.driver-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--bg-base);
+}
+
+.driver-nav {
+  display: flex;
+  background: var(--bg-surface-low);
+  border-bottom: 1px solid var(--border-outline);
+  padding: 12px 16px;
+  gap: 12px;
+}
+
+.driver-content {
+  flex: 1;
+  padding: 16px;
+}
+
+.speedo-gauge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--color-primary-bright);
+}
