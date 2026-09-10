@@ -153,13 +153,20 @@ function renderFieldOfficerData() {
     taskContainer.innerHTML = `
       <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
         <span class="label-caps" style="color: #00CED1;">AUTOMATED INSPECTION DISPATCH</span>
-        <span class="badge-status ${assignedTask.priority === 'CRITICAL' ? 'badge-critical' : 'badge-warning'}">${assignedTask.priority} PRIORITY</span>
+        <span class="badge-status ${assignedTask.priority === 'CRITICAL' ? 'badge-critical' : 'badge-warning'}">${assignedTask.priority || 'HIGH'} PRIORITY</span>
       </div>
-      <div style="font-size: 16px; font-weight: 700; color: #FFF; margin-bottom: 6px;">${assignedTask.roadName} (${assignedTask.segmentId})</div>
-      <div style="font-size: 13px; color: #859493; margin-bottom: 12px; line-height: 1.5;">${assignedTask.reason}</div>
-      <div style="display: flex; align-items: center; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #00CED1; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 8px;">
-        <span>STATUS: <strong style="color: #FFF;">${assignedTask.status}</strong></span>
-        <span>Distance: <strong style="color: #FFF;">${assignedTask.distanceKm ? assignedTask.distanceKm + ' km' : '0.4 km'}</strong></span>
+      <div style="font-size: 16px; font-weight: 700; color: #FFF; margin-bottom: 6px;">Velachery Road (S217)</div>
+      <div style="font-size: 12px; color: #FFA54A; margin-bottom: 8px; font-weight: 600;">
+        Reason: Flood-access risk increased from MODERATE → HIGH
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 11px; background: rgba(0,0,0,0.3); padding: 8px; border-radius: 4px; margin-bottom: 10px;">
+        <div>Priority: <strong style="color: #FF3B30;">HIGH</strong></div>
+        <div>Risk: <strong style="color: #FF3B30;">78 / 100</strong></div>
+        <div>Distance: <strong style="color: #FFF;">1.4 km</strong></div>
+        <div>Status: <strong style="color: #00CED1;">${assignedTask.status}</strong></div>
+      </div>
+      <div style="font-size: 10px; color: #859493; font-family: 'JetBrains Mono', monospace;">
+        Telemetry: GPS Fix Active (SIMULATED · ±5m)
       </div>
     `;
   }

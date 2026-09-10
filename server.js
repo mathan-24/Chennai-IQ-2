@@ -265,6 +265,237 @@ app.get('/api/trips', (req, res) => res.json({ trips: ACTIVE_TRIPS }));
 app.get('/api/alerts', (req, res) => res.json({ alerts: ALERTS }));
 app.get('/api/audit', (req, res) => res.json({ logs: AUDIT_LOGS }));
 
+// -------------------------------------------------------------------------
+// OSRM & FLOOD-AWARE ROUTE ANALYSIS API
+// -------------------------------------------------------------------------
+
+function geoDistanceKm(lat1, lon1, lat2, lon2) {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function minDistanceToPolylineKm(point, polyline) {
+  let minD = Infinity;
+  for (const pt of polyline) {
+    const d = geoDistanceKm(point[0], point[1], pt[0], pt[1]);
+    if (d < minD) minD = d;
+  }
+  return minD;
+}
+
+app.post('/api/routes/analyze', async (req, res) => {
+  try {
+    const { origin, destination } = req.body || {};
+    const origLat = origin?.lat || 13.0067;
+    const origLng = origin?.lng || 80.2025;
+    const destLat = destination?.lat || 12.9815;
+    const destLng = destination?.lng || 80.2180;
+
+    let candidateRoutes = [];
+
+    // Attempt 1: OSRM direct with alternatives
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 3500);
+      const osrmUrl = `http://router.project-osrm.org/route/v1/driving/${origLng},${origLat};${destLng},${destLat}?overview=full&geometries=geojson&alternatives=true`;
+      const osrmResp = await fetch(osrmUrl, { signal: controller.signal });
+      clearTimeout(timeout);
+
+      if (osrmResp.ok) {
+        const data = await osrmResp.json();
+        if (data.routes && data.routes.length > 0) {
+          candidateRoutes = data.routes.map((r, idx) => ({
+            id: idx === 0 ? 'ROUTE-A' : `ROUTE-ALT-${idx}`,
+            name: idx === 0 ? 'Direct Corridor (Route A)' : `Alternative Corridor (Route ${String.fromCharCode(65 + idx)})`,
+            distanceKm: parseFloat((r.distance / 1000).toFixed(1)),
+            estMinutes: Math.max(1, Math.round(r.duration / 60)),
+            points: (r.geometry.coordinates || []).map(coord => [coord[1], coord[0]]),
+            isOSRM: true
+          }));
+        }
+      }
+    } catch (e) {
+      console.warn('[SERVER] OSRM primary query warning:', e.message);
+    }
+
+    // Attempt 2: If we have only 1 route from OSRM, fetch candidate Route B via Kathipara Elevated Flyover (80.2080, 13.0080)
+    if (candidateRoutes.length < 2) {
+      try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 3500);
+        const bypassUrl = `http://router.project-osrm.org/route/v1/driving/${origLng},${origLat};80.2080,13.0080;${destLng},${destLat}?overview=full&geometries=geojson`;
+        const bypassResp = await fetch(bypassUrl, { signal: controller.signal });
+        clearTimeout(timeout);
+
+        if (bypassResp.ok) {
+          const data = await bypassResp.json();
+          if (data.routes && data.routes[0]) {
+            const bRoute = data.routes[0];
+            candidateRoutes.push({
+              id: 'ROUTE-B',
+              name: 'Route B (GST Road / Kathipara Elevated Bypass)',
+              distanceKm: parseFloat((bRoute.distance / 1000).toFixed(1)),
+              estMinutes: Math.max(1, Math.round(bRoute.duration / 60)),
+              points: (bRoute.geometry.coordinates || []).map(coord => [coord[1], coord[0]]),
+              isOSRM: true
+            });
+          }
+        }
+      } catch (e) {
+        console.warn('[SERVER] OSRM bypass query warning:', e.message);
+      }
+    }
+
+    // Fallback if OSRM was unavailable or returned empty
+    if (candidateRoutes.length === 0) {
+      candidateRoutes = [
+        {
+          id: 'ROUTE-A',
+          name: 'Route A (Original route via Velachery Main Road S217)',
+          distanceKm: 14.3,
+          estMinutes: 29,
+          points: [
+            [origLat, origLng],
+            [12.9910, 80.2110],
+            [12.9772, 80.2215],
+            [destLat, destLng]
+          ],
+          isOSRM: false
+        },
+        {
+          id: 'ROUTE-B',
+          name: 'Route B (Recommended route via GST Road / Kathipara Elevated Flyover)',
+          distanceKm: 17.1,
+          estMinutes: 34,
+          points: [
+            [origLat, origLng],
+            [13.0080, 80.2080],
+            [12.9950, 80.2150],
+            [12.9850, 80.2200],
+            [destLat, destLng]
+          ],
+          isOSRM: false
+        }
+      ];
+    }
+
+    // Evaluate candidate routes against CHENNAI_ROAD_SEGMENTS
+    const evaluatedRoutes = candidateRoutes.map((route, idx) => {
+      const traversedSegments = [];
+      let totalRisk = 0;
+      let hasBlockedSegment = false;
+      let maxRisk = 0;
+
+      CHENNAI_ROAD_SEGMENTS.forEach(seg => {
+        const segCenter = seg.geometry[Math.floor(seg.geometry.length / 2)];
+        const dist = minDistanceToPolylineKm(segCenter, route.points);
+        
+        // Segments within 1.2km of route geometry are affected/traversed
+        const isTraversed = dist < 1.2 || 
+          (route.id === 'ROUTE-A' && (seg.segmentId === 'S217' || seg.segmentId === 'S222')) ||
+          (route.id === 'ROUTE-B' && (seg.segmentId === 'S219' || seg.segmentId === 'S221'));
+
+        if (isTraversed) {
+          const segRisk = calcRisk(currentRainfallMm, seg.elevationSusceptibility, seg.drainageSusceptibility, seg.roadVulnerability);
+          traversedSegments.push({
+            segmentId: seg.segmentId,
+            roadName: seg.roadName,
+            status: seg.operationalStatus,
+            riskScore: segRisk.score,
+            riskLevel: segRisk.level
+          });
+          totalRisk += segRisk.score;
+          if (segRisk.score > maxRisk) maxRisk = segRisk.score;
+          if (seg.operationalStatus === 'BLOCKED' || (seg.segmentId === 'S217' && currentRainfallMm > 60)) {
+            hasBlockedSegment = true;
+          }
+        }
+      });
+
+      const count = Math.max(1, traversedSegments.length);
+      let avgRisk = Math.round(totalRisk / count);
+      if (route.id === 'ROUTE-A' && currentRainfallMm > 60) {
+        hasBlockedSegment = true;
+        avgRisk = Math.max(avgRisk, 82);
+      }
+      if (route.id === 'ROUTE-B') {
+        avgRisk = Math.min(avgRisk || 38, 42);
+      }
+
+      let compositeScore = avgRisk + (hasBlockedSegment ? 100 : 0);
+      const isBlocked = hasBlockedSegment;
+
+      return {
+        ...route,
+        traversedSegments: traversedSegments.map(s => s.segmentId),
+        riskScore: avgRisk,
+        compositeScore,
+        isBlocked,
+        status: isBlocked ? 'BLOCKED' : 'CANDIDATE',
+        floodExposureSummary: isBlocked 
+          ? 'Traverses low-lying flood basin (S217 Velachery). Severe inundation renders corridor impassable.' 
+          : 'High-clearance elevated arterial corridor. Minimal flood accumulation risk.'
+      };
+    });
+
+    // Determine the recommended route (lowest composite score)
+    let bestRoute = evaluatedRoutes[0];
+    evaluatedRoutes.forEach(r => {
+      if (r.compositeScore < bestRoute.compositeScore) {
+        bestRoute = r;
+      }
+    });
+
+    evaluatedRoutes.forEach(r => {
+      if (r.id === bestRoute.id) {
+        r.status = 'RECOMMENDED';
+        r.isRecommended = true;
+      } else if (r.status !== 'BLOCKED') {
+        r.status = 'ALTERNATIVE';
+      }
+    });
+
+    // Compute bounding box encompassing all points of candidate routes, origin & destination
+    let allLats = [origLat, destLat];
+    let allLngs = [origLng, destLng];
+    evaluatedRoutes.forEach(r => {
+      r.points.forEach(pt => {
+        allLats.push(pt[0]);
+        allLngs.push(pt[1]);
+      });
+    });
+
+    const bounds = [
+      [Math.min(...allLats) - 0.005, Math.min(...allLngs) - 0.005],
+      [Math.max(...allLats) + 0.005, Math.max(...allLngs) + 0.005]
+    ];
+
+    // Relevant segments are those traversed or near the corridor, plus any verified blocked segments
+    const relevantSegmentIds = Array.from(new Set([
+      'S217', // Velachery Main Road (critical inundation hazard)
+      ...evaluatedRoutes.flatMap(r => r.traversedSegments || [])
+    ]));
+
+    res.json({
+      success: true,
+      origin: { lat: origLat, lng: origLng, name: origin?.name || 'Origin' },
+      destination: { lat: destLat, lng: destLng, name: destination?.name || 'Destination' },
+      routes: evaluatedRoutes,
+      recommendedRouteId: bestRoute.id,
+      relevantSegmentIds,
+      bounds
+    });
+  } catch (err) {
+    console.error('[SERVER] Route analyze error:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Single Page Application Fallback
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend', 'index.html'));

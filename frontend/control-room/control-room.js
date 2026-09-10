@@ -25,14 +25,24 @@ let searchQuery = '';
 export const initControlRoomView = initControlRoom;
 export const openIncidentDetails = openSegmentDetails;
 
+export function getControlMap() {
+  return controlMap;
+}
+
 export function initControlRoom() {
   const mapContainer = document.getElementById('cr-map-container');
   if (mapContainer && !controlMap) {
     controlMap = new RouteIQMap('cr-map-container', {
-      center: [13.0150, 80.2200],
-      zoom: 12,
-      interactive: true
+      center: [13.0080, 80.2150],
+      zoom: 13,
+      interactive: true,
+      basemap: 'streets'
     });
+  } else if (controlMap && controlMap.map) {
+    setTimeout(() => {
+      controlMap.map.invalidateSize();
+      controlMap.renderFeatures();
+    }, 150);
   }
 
   setupEventListeners();
@@ -180,6 +190,9 @@ export function renderControlRoomData() {
 
   const elAffectedVehicles = document.getElementById('kpi-affected-vehicles');
   if (elAffectedVehicles) elAffectedVehicles.textContent = affectedTripsCount;
+
+  const elCriticalRoads = document.getElementById('kpi-critical-roads');
+  if (elCriticalRoads) elCriticalRoads.textContent = (state.roadSegments || []).length;
 
   // 3. Render Road Segments Feed on Overview
   renderOverviewSegmentsFeed(state);
@@ -620,37 +633,49 @@ export function openExceptionModal(reportId) {
 export function runFullEndToEndScenario() {
   dialog.confirm({
     title: 'EXECUTE CHENNAI FLOOD ACCESS SCENARIO',
-    message: `Run complete operational scenario:\n1. Monsoonal precipitation surges to 150mm\n2. S217 Velachery risk climbs to HIGH (Score 74)\n3. Hazard HAZ-S217 detected, Task auto-assigned to nearest officer FO-02 (0.4km away)\n4. FO-02 arrives on-site & submits field verification with photo evidence\n5. AI Confidence Engine validates (High Confidence) -> S217 marked BLOCKED\n6. Dynamic routing evaluates Route B as RECOMMENDED (+6 min, Risk 32 LOW)\n7. Targeted alert dispatched exclusively to Driver Rajesh Kumar (TRK-104)!`,
-    confirmText: 'RUN LIVE SIMULATION',
+    message: `Run complete operational scenario (SIMULATION MODE):\n` +
+      `1. Monsoonal precipitation surges to 150 mm\n` +
+      `2. S217 Velachery risk climbs from MODERATE → HIGH (Risk Score: 78/100)\n` +
+      `3. Automated flood hazard event detected\n` +
+      `4. Inspection task created automatically (TASK-101)\n` +
+      `5. Task assigned to nearest available Field Officer FO-02 (Sub-Inspector Selvam, 1.4 km away)\n` +
+      `6. Officer arrives on-site & submits GPS fix + physical photographic evidence\n` +
+      `7. Verification confidence evaluated: HIGH (85% Confidence Score)\n` +
+      `8. Verification policy executed: Auto-process high-confidence observation → Road S217 updated to VERIFIED WATERLOGGED / BLOCKED\n` +
+      `9. Active trips affected by S217 identified (TN-01-AB-1042 / Rajesh Kumar)\n` +
+      `10. Candidate routes reevaluated (Route A: 82/100 Blocked vs Route B: 38/100 Open)\n` +
+      `11. Lower-risk route recommended: Route B via GST Road / Kathipara Elevated Flyover (+5 min)\n` +
+      `12. Affected driver receives targeted in-cab disruption alert!`,
+    confirmText: 'RUN FLOOD SCENARIO',
     icon: 'play_arrow',
     onConfirm: () => {
-      dialog.toast('Step 1/4: Monsoonal rainfall surging to 150 mm...', 'info', 2000);
+      dialog.toast('Step 1-3/12: Precipitation surging to 150 mm (SIMULATION MODE)... S217 risk escalated to HIGH.', 'info', 3000);
       store.setRainfall(150);
 
       setTimeout(() => {
-        const task = (store.getState().fieldTasks || []).find(t => t.segmentId === 'S217');
+        const task = (store.getState().fieldTasks || []).find(t => t.segmentId === 'S217') || store.getState().fieldTasks[0];
         if (task) {
-          dialog.toast(`Step 2/4: Task ${task.id} auto-assigned to nearest officer FO-02 (${task.distanceKm} km away). Officer arriving on site...`, 'info', 2500);
+          dialog.toast(`Step 4-5/12: Task ${task.id} auto-assigned to nearest officer FO-02 (1.4 km away). Officer en route to Velachery...`, 'info', 3000);
           store.acceptTask(task.id);
           store.arriveOnSite(task.id);
 
           setTimeout(() => {
-            dialog.toast('Step 3/4: Field report submitted with photo evidence & GPS fix...', 'info', 2500);
+            dialog.toast('Step 6-8/12: Field evidence submitted. Verification Confidence: HIGH. Policy applied: Road S217 marked VERIFIED WATERLOGGED / BLOCKED.', 'warning', 3500);
             store.submitFieldReport({
               taskId: task.id,
               officerId: 'FO-02',
               segmentId: 'S217',
               conditionType: 'flooding',
               severity: 'CRITICAL',
-              description: 'Velachery Lake water surged 0.85m across carriage lanes. Completely impassable for logistics trucks.',
+              description: 'Velachery Lake water surged across highway lanes. Deep waterlogging measured at 65cm. Impassable for standard traffic.',
               coordinates: { lat: 12.9772, lng: 80.2215, accuracy: '±5 m' },
               evidencePhotos: [INCIDENT_PHOTO_PRESETS[0].url]
             });
 
             setTimeout(() => {
-              dialog.toast('Step 4/4: S217 marked BLOCKED! Route B marked RECOMMENDED! Targeted Disruption Alert sent to Driver Rajesh Kumar!', 'success', 5000);
-            }, 1500);
-          }, 2000);
+              dialog.toast('Step 9-12/12: S217 BLOCKED! Route B RECOMMENDED via GST Road (+5 min, Lower Risk 38/100). Targeted alert dispatched to Driver Rajesh Kumar (TN-01-AB-1042)!', 'success', 6000);
+            }, 1800);
+          }, 2500);
         }
       }, 2000);
     }

@@ -1,21 +1,21 @@
 # Demo Walkthrough Scenario
 
-### "Sector North Critical Vaccine Expedition"
+### "Chennai Emergency Flood Access & Relief Mission"
 
 1. **Step 1 - Authentication & Role Selection**:
-   - Login as Dispatcher (`dispatcher@sector-north.gov`), Officer (`field104@sector-north.gov`), or Driver (`driver104@sector-north.gov`).
+   - Login as Dispatcher (`control@chennai-iq.gov`), Officer (`field02@chennai-iq.gov`), or Driver (`driver104@chennai-iq.gov`).
 
 2. **Step 2 - Field Reconnaissance**:
    - Switch to Field Officer terminal.
-   - Report a landslide at NH-S82 Milestone 14.2 with High Severity and attach photo evidence.
+   - Accept the prioritized inspection task for Velachery Road (Segment S217) and submit waterlogging verification.
 
 3. **Step 3 - Control Room Verification & Risk Recalibration**:
    - Open Control Room Command Center.
-   - Review pending incident `INC-1024`.
-   - Click "Verify & Close Segment" — Route A turns red (Blocked, Risk 88/100) while Route B is marked Recommended (Risk 35/100).
-   - Click "Transmit Dispatch Reroute" to send instruction to TRK-104.
+   - Test rainfall intensity using the Chennai Monsoon Rainfall Simulator slider (75mm -> 150mm).
+   - Review pending incident and verify road status — Route A turns red (Blocked, Risk 82/100) while Route B (GST / Kathipara Elevated Flyover) is marked Recommended (Risk 38/100).
+   - Click "Transmit Dispatch Reroute" to send instruction to vehicle TN-01-AB-1042.
 
 4. **Step 4 - Driver Tactical In-Cab Execution**:
-   - Switch to Driver terminal.
-   - Acknowledge the mandatory bypass dispatch.
+   - Switch to Driver navigation console.
+   - Acknowledge the dynamic Kathipara Elevated bypass dispatch and engage Route B.
    - Observe GPS navigation redirecting through Ridge Bypass with stable cold-chain telemetry (`+3.8°C`).

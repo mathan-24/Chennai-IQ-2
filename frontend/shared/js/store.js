@@ -94,7 +94,7 @@ function createDefaultState() {
 
     weather: {
       status: 'LIVE',
-      condition: 'Northeast Monsoonal Rainfall (Intensifying Depressions)',
+      condition: 'Monsoonal Precipitation & Coastal Storm Depressions',
       rainfallMm24h: initialRain,
       rainfallRateMmH: 18.5,
       simulationMode: true,
@@ -128,11 +128,14 @@ function createDefaultState() {
         id: 'TRIP-001',
         driverId: 'DRV-104',
         driverName: 'Rajesh Kumar',
-        vehicleId: 'TRK-104',
+        vehicleId: 'TN-01-AB-1042',
+        vehicleAlias: 'TRK-104',
         activeRouteId: 'ROUTE-A',
-        activeRouteName: 'Route A (Velachery Arterial Corridor via S217)',
-        origin: 'Tambaram Disaster Relief Logistics Base',
-        destination: 'Chennai Central Emergency Hub (Ripon Building)',
+        activeRouteName: 'Route A (Original route via Velachery Main Road S217)',
+        origin: 'Guindy Hub (Chennai)',
+        currentLocation: 'Guindy Hub (Chennai)',
+        destination: 'Velachery Emergency Center',
+        tripStatus: 'ACTIVE',
         status: 'ACTIVE',
         isAffected: false
       },
@@ -140,31 +143,35 @@ function createDefaultState() {
         id: 'TRIP-002',
         driverId: 'DRV-208',
         driverName: 'S. Murugan',
-        vehicleId: 'TRK-208',
+        vehicleId: 'TN-09-AX-2088',
+        vehicleAlias: 'TRK-208',
         activeRouteId: 'ROUTE-B',
-        activeRouteName: 'Route B (GST Road / Kathipara Elevated Bypass)',
-        origin: 'Tambaram Logistics Base',
-        destination: 'Chennai Port Logistics Depot',
+        activeRouteName: 'Route B (GST Road / Kathipara Elevated Flyover)',
+        origin: 'Tambaram Disaster Base',
+        currentLocation: 'Kathipara Junction',
+        destination: 'Chennai Central Operations Depot',
+        tripStatus: 'ACTIVE',
         status: 'ACTIVE',
         isAffected: false
       }
     ],
 
-    // Inspection tasks generated automatically on hazard detection
+    // Automated field inspection tasks
     fieldTasks: [
       {
         id: 'TASK-101',
-        hazardId: 'HAZ-INIT-S218',
-        segmentId: 'S218',
-        roadName: 'OMR IT Expressway (Perungudi)',
-        priority: 'MODERATE',
-        status: 'COMPLETED',
-        assignedOfficerId: 'FO-03',
-        assignedOfficerName: 'Officer Priya R.',
-        distanceKm: 2.1,
-        reason: 'Periodic pre-monsoon storm drain culvert check',
-        createdAt: '16:30 IST',
-        completedAt: '17:15 IST'
+        hazardId: 'HAZ-INIT-S217',
+        segmentId: 'S217',
+        roadName: 'Velachery Road (S217)',
+        priority: 'HIGH',
+        status: 'PENDING',
+        riskScore: 78,
+        assignedOfficerId: 'FO-02',
+        assignedOfficerName: 'Sub-Inspector M. Selvam',
+        distanceKm: 1.4,
+        reason: 'Flood-access risk increased from MODERATE → HIGH',
+        createdAt: '16:45 IST',
+        completedAt: null
       }
     ],
 
@@ -176,33 +183,25 @@ function createDefaultState() {
     driverDisruptionAlertActive: false,
     driverPendingDispatch: null,
 
-    // Deliveries & Shipments (reused from Route-IQ for manifest & cold chain display)
+    // Active Relief Consignments & Emergency Trips
     deliveries: [
       {
-        id: 'MED-EXP-8801',
-        manifestTitle: 'Emergency Pediatric Vaccines & Antivenom (Batch #CHN-42)',
-        cargo: 'Life-saving vaccines & cold-chain trauma packages',
-        netWeightKg: 1250,
-        totalUnits: 950,
-        priority: 'CRITICAL',
-        vehicleId: 'TRK-104',
-        vehiclePlate: 'TN-09-CB-4812',
+        id: 'TRIP-CHN-1042',
+        manifestTitle: 'EMERGENCY FLOOD RELIEF & DEWATERING CONSIGNMENT',
+        cargo: 'High-clearance dewatering pumps, life-rafts, trauma medical kits',
+        netWeightKg: 1850,
+        totalUnits: 120,
+        priority: 'HIGH',
+        vehicleId: 'TN-01-AB-1042',
+        vehiclePlate: 'TN-01-AB-1042',
         driverId: 'DRV-104',
-        driverName: 'Rajesh Kumar (Emergency Transport Specialist)',
-        origin: 'Tambaram Disaster Relief Logistics Base',
-        destination: 'Chennai Central Emergency Hub (Ripon Building)',
-        eta: '18:15 IST',
-        currentRoute: 'Route A (Velachery Arterial Corridor via S217)',
+        driverName: 'Rajesh Kumar',
+        origin: 'Guindy Central Logistics Hub',
+        destination: 'Velachery Emergency Relief Center',
+        eta: '34 min',
+        currentRoute: 'Route A (Original route via Velachery Main Road S217)',
         status: 'ACTIVE',
-        riskReason: 'Monitoring Velachery basin flood susceptibility under monsoonal rainfall.',
-        coldChain: {
-          temp: '+3.8°C',
-          safeRange: '+2.0°C to +8.0°C',
-          status: 'NORMAL',
-          sensorHealth: 'Nominal (Sensirion SHT35 Digital IoT Probe)',
-          lastUpdated: 'Updated 10 sec ago',
-          freshness: 'LIVE'
-        }
+        riskReason: 'Monitoring Velachery basin flood susceptibility under monsoonal rainfall.'
       }
     ],
 

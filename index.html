@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ROUTE-IQ | CHENNAI-IQ: AI-Assisted Flood Access Risk Mapping & Dynamic Routing for Chennai</title>
+  <title>CHENNAI-IQ: AI-Assisted Flood Access Risk Mapping & Dynamic Routing for Chennai</title>
   <meta name="description" content="CHENNAI-IQ: AI-Assisted Flood Access Risk Mapping & Dynamic Routing for Chennai" />
-  <meta property="og:title" content="ROUTE-IQ | CHENNAI-IQ: AI-Assisted Flood Access Risk Mapping & Dynamic Routing for Chennai" />
+  <meta property="og:title" content="CHENNAI-IQ: AI-Assisted Flood Access Risk Mapping & Dynamic Routing for Chennai" />
   <meta property="og:description" content="CHENNAI-IQ: AI-Assisted Flood Access Risk Mapping & Dynamic Routing for Chennai" />
 
   <!-- Fonts & Icons -->
@@ -19,7 +19,7 @@
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
-  <!-- Route-IQ Stylesheets -->
+  <!-- CHENNAI-IQ Stylesheets -->
   <link rel="stylesheet" href="/frontend/shared/css/theme.css" />
   <link rel="stylesheet" href="/frontend/shared/css/main.css" />
 </head>
@@ -139,7 +139,7 @@
               </span>
             </div>
             <p class="data-mono" style="font-size: 11px; color: var(--text-muted); text-align: center; margin: 0; margin-top: 4px;">
-              © 2026 Route-IQ. All rights reserved.
+              © 2026 CHENNAI-IQ. All rights reserved.
             </p>
           </div>
         </div>
@@ -329,7 +329,7 @@
         <div style="display: flex; align-items: center; gap: 14px;">
           <div style="display: flex; align-items: center; gap: 8px;">
             <span class="material-symbols-outlined" style="color: var(--color-primary-bright); font-size: 24px;">alt_route</span>
-            <span class="font-display" style="font-size: 18px; font-weight: 700; color: #FFF;">ROUTE-IQ</span>
+            <span class="font-display" style="font-size: 18px; font-weight: 700; color: #FFF;">CHENNAI-IQ</span>
           </div>
           <span class="label-caps" style="color: var(--text-on-surface-variant);">Driver Navigation Console</span>
         </div>
@@ -360,27 +360,27 @@
             <div style="display: flex; flex-direction: column; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 12px;">
               <div style="display: flex; justify-content: space-between;">
                 <span style="color: var(--text-on-surface-variant);">Vehicle:</span>
-                <strong style="color: #FFF;">TRK-104</strong>
+                <strong style="color: #00CED1;">TN-01-AB-1042</strong>
               </div>
               <div style="display: flex; justify-content: space-between;">
-                <span style="color: var(--text-on-surface-variant);">Cargo:</span>
-                <strong style="color: var(--color-warning);">Life-saving medicines</strong>
-              </div>
-              <div style="display: flex; justify-content: space-between;">
-                <span style="color: var(--text-on-surface-variant);">Priority:</span>
-                <span class="badge-status badge-critical">HIGH</span>
+                <span style="color: var(--text-on-surface-variant);">Current Location:</span>
+                <strong style="color: #FFF;">Guindy Hub (Chennai)</strong>
               </div>
               <div style="display: flex; justify-content: space-between;">
                 <span style="color: var(--text-on-surface-variant);">Destination:</span>
-                <span style="color: #FFF; text-align: right;">Remote Hospital, Arunachal Pradesh</span>
+                <span style="color: #FFF; text-align: right;">Velachery Emergency Center</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--text-on-surface-variant);">Trip Status:</span>
+                <span class="badge-status badge-verified" id="driver-trip-status-badge">ACTIVE</span>
               </div>
               <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-outline); padding-top: 8px; margin-top: 4px;">
                 <span style="color: var(--text-on-surface-variant);">ETA:</span>
-                <strong style="color: var(--color-primary-bright); font-size: 14px;">4h 25m</strong>
+                <strong style="color: var(--color-primary-bright); font-size: 14px;" id="driver-eta-display">34 min</strong>
               </div>
               <div style="display: flex; justify-content: space-between;">
-                <span style="color: var(--text-on-surface-variant);">Distance Remaining:</span>
-                <strong style="color: #FFF;">186 km</strong>
+                <span style="color: var(--text-on-surface-variant);">Distance:</span>
+                <strong style="color: #FFF;" id="driver-dist-display">17.1 km</strong>
               </div>
             </div>
           </div>
@@ -392,31 +392,40 @@
 
           <!-- Corridor Comparison -->
           <div class="glass-panel" style="padding: 16px;">
-            <span class="label-caps" style="display: block; margin-bottom: 10px;">CORRIDOR COMPARISON</span>
+            <span class="label-caps" style="display: block; margin-bottom: 10px;">CANDIDATE ROUTES</span>
             <div style="display: flex; flex-direction: column; gap: 8px;">
               <!-- Route A -->
               <div style="background: rgba(147, 0, 10, 0.15); border: 1px solid rgba(255, 180, 171, 0.4); padding: 10px; border-radius: var(--radius-sm);">
                 <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 11px;">
-                  <strong style="color: #FFF;">Route A</strong>
-                  <span style="color: var(--color-critical); font-weight: bold;">90 / 100 RISK</span>
+                  <strong style="color: #FFF;">Route A (Original)</strong>
+                  <span style="color: var(--color-critical); font-weight: bold;">82 / 100 RISK</span>
                 </div>
-                <div style="font-size: 11px; color: var(--color-critical); margin-top: 2px;">4h 35m · 182 km · <strong>BLOCKED (S82 Landslide)</strong></div>
+                <div style="font-size: 11px; color: var(--color-critical); margin-top: 2px;">
+                  14.3 km · 29 min · <strong>Waterlogged / Blocked (S217 Velachery)</strong>
+                </div>
               </div>
               <!-- Route B -->
               <div style="background: rgba(0, 206, 209, 0.15); border: 1px solid var(--color-primary); padding: 10px; border-radius: var(--radius-sm); box-shadow: 0 0 8px rgba(0, 206, 209, 0.2);">
                 <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 11px;">
-                  <strong style="color: var(--color-primary-bright);">Route B ★</strong>
-                  <span style="color: var(--color-primary-bright); font-weight: bold;">35 / 100 RISK</span>
+                  <strong style="color: var(--color-primary-bright);">Route B (Recommended) ★</strong>
+                  <span style="color: var(--color-primary-bright); font-weight: bold;">38 / 100 RISK</span>
                 </div>
-                <div style="font-size: 11px; color: #DDE4E3; margin-top: 2px;">4h 25m · 186 km · <strong>RECOMMENDED · ACTIVE</strong></div>
+                <div style="font-size: 11px; color: #DDE4E3; margin-top: 2px;">
+                  17.1 km · 34 min · <strong>Open via GST / Kathipara Elevated Flyover</strong>
+                </div>
+                <div style="font-size: 10px; color: #00CED1; margin-top: 4px; font-family: 'JetBrains Mono', monospace;">
+                  Lower flood-access risk with small travel-time increase (+5 min)
+                </div>
               </div>
               <!-- Route C -->
               <div style="background: rgba(22, 29, 29, 0.7); border: 1px solid var(--border-outline); padding: 10px; border-radius: var(--radius-sm);">
                 <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 11px;">
-                  <strong style="color: #FFF;">Route C</strong>
-                  <span style="color: var(--color-warning);">55 / 100 RISK</span>
+                  <strong style="color: #FFF;">Route C (Alternative)</strong>
+                  <span style="color: var(--color-warning);">54 / 100 RISK</span>
                 </div>
-                <div style="font-size: 11px; color: var(--text-on-surface-variant); margin-top: 2px;">5h 10m · 214 km · Alternative Corridor</div>
+                <div style="font-size: 11px; color: var(--text-on-surface-variant); margin-top: 2px;">
+                  18.0 km · 36 min · Moderate Risk via Inner Ring Road
+                </div>
               </div>
             </div>
           </div>
@@ -432,8 +441,8 @@
           <div class="glass-panel" style="padding: 16px; display: flex; align-items: center; justify-content: space-between;">
             <div>
               <span class="label-caps" style="color: var(--color-primary-bright);">RECOMMENDED ACTION</span>
-              <div style="font-size: 16px; font-weight: 700; color: #FFF;">Take Route B (Ridge Bypass)</div>
-              <div style="font-size: 12px; color: var(--text-on-surface-variant); margin-top: 2px;">Clear of active landslides. Validated for heavy cargo truck TRK-104.</div>
+              <div style="font-size: 16px; font-weight: 700; color: #FFF;">Take Route B (GST / Kathipara Elevated Bypass)</div>
+              <div style="font-size: 12px; color: var(--text-on-surface-variant); margin-top: 2px;">Lower estimated flood-access risk with small travel-time increase (+5 min). Clear of Velachery stormwater inundation.</div>
             </div>
             <div style="display: flex; gap: 10px;">
               <button id="btn-driver-navigate-b" class="btn-primary">
@@ -451,15 +460,15 @@
           <!-- Active Navigation -->
           <div class="glass-panel" style="padding: 16px; border: 1px solid var(--color-primary);">
             <span class="label-caps" style="display: block; margin-bottom: 8px;">CURRENT ACTIVE NAVIGATION</span>
-            <div style="font-size: 22px; font-weight: 700; color: var(--color-primary-bright);">Route B</div>
-            <div style="font-size: 13px; color: var(--text-on-surface-variant); margin-bottom: 12px;">Ridge Bypass Corridor</div>
+            <div style="font-size: 20px; font-weight: 700; color: var(--color-primary-bright);">Route B</div>
+            <div style="font-size: 13px; color: var(--text-on-surface-variant); margin-bottom: 12px;">GST Road / Kathipara Elevated Corridor</div>
             <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0, 206, 209, 0.1); padding: 10px 12px; border-radius: var(--radius-sm); border: 1px solid rgba(0, 206, 209, 0.3);">
               <div>
                 <span class="badge-status badge-recommended">● ROUTE B ACTIVE</span>
-                <div style="font-size: 11px; color: #FFF; margin-top: 4px;">LOWER OPERATIONAL RISK</div>
+                <div style="font-size: 11px; color: #FFF; margin-top: 4px;">LOWER ESTIMATED FLOOD RISK</div>
               </div>
               <div style="font-family: 'Inter', sans-serif; font-size: 24px; font-weight: 700; color: var(--color-primary-bright);">
-                35 <span style="font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--text-on-surface-variant);">/ 100</span>
+                38 <span style="font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--text-on-surface-variant);">/ 100</span>
               </div>
             </div>
           </div>
@@ -467,28 +476,28 @@
           <!-- Disruption Warning Banner -->
           <div id="driver-disruption-banner" class="disruption-banner">
             <div style="display: flex; align-items: center; gap: 8px; color: var(--color-critical);">
-              <span class="material-symbols-outlined" style="font-size: 20px;">warning</span>
-              <strong class="font-display" style="font-size: 14px; letter-spacing: -0.01em;">LANDSLIDE VERIFIED</strong>
+              <span class="material-symbols-outlined" style="font-size: 20px;">flood</span>
+              <strong class="font-display" style="font-size: 14px; letter-spacing: -0.01em;">WATERLOGGING BLOCKED</strong>
             </div>
-            <div style="font-size: 12px; color: #FFF; line-height: 1.4;">
-              <strong>Road Segment S82:</strong> Route A is blocked ahead.<br />
+            <div style="display: font-size: 12px; color: #FFF; line-height: 1.4;">
+              <strong>Road Segment S217 (Velachery Rd):</strong> Severe waterlogging (0.85m depth). Route A is impassable.<br />
               Route B is recommended as the lower-risk alternative.
             </div>
             <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-on-surface-variant); margin-top: 4px;">
               <span>Verified: 10:28 AM</span>
-              <span>Source: FO-104</span>
+              <span>Source: FO-02 (Selvam)</span>
             </div>
             <button id="btn-view-disruption" class="btn-danger" style="margin-top: 6px; width: 100%;">
-              VIEW DISRUPTION REPORT
+              VIEW FLOOD DISRUPTION REPORT
             </button>
           </div>
 
           <!-- Next Checkpoint -->
           <div class="glass-panel" style="padding: 16px;">
             <span class="label-caps" style="display: block; margin-bottom: 6px;">NEXT ACTION</span>
-            <div style="font-size: 14px; font-weight: 600; color: #FFF;">Continue on Ridge Bypass</div>
+            <div style="font-size: 14px; font-weight: 600; color: #FFF;">Proceed via GST / Kathipara Flyover</div>
             <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--color-primary); margin-top: 4px;">
-              Next Checkpoint: Bomdila Junction (12.4 km)
+              Next Waypoint: Kathipara Cloverleaf Junction (3.2 km)
             </div>
           </div>
         </div>
@@ -507,15 +516,15 @@
         <div style="display: flex; align-items: center; gap: 14px;">
           <div style="display: flex; align-items: center; gap: 8px;">
             <span class="material-symbols-outlined" style="color: var(--color-primary-bright); font-size: 24px;">verified_user</span>
-            <span class="font-display" style="font-size: 18px; font-weight: 700; color: #FFF;">ROUTE-IQ</span>
+            <span class="font-display" style="font-size: 18px; font-weight: 700; color: #FFF;">CHENNAI-IQ</span>
           </div>
-          <span class="label-caps" style="color: var(--text-on-surface-variant);">Field Operations · Sector North</span>
+          <span class="label-caps" style="color: var(--text-on-surface-variant);">FIELD OPERATIONS · CHENNAI</span>
         </div>
 
         <div style="display: flex; align-items: center; gap: 16px;">
-          <div class="badge-status badge-verified">● ONLINE</div>
+          <div class="badge-status badge-verified">● ONLINE (SIMULATION MODE)</div>
           <div class="data-mono" style="color: #FFF; font-size: 12px;">
-            <span style="color: var(--color-primary);">FO-104</span> · Last sync: 2 min ago
+            <span style="color: var(--color-primary);">FO-02</span> · Sub-Inspector Selvam
           </div>
           <button class="btn-icon" onclick="window.RouteIQ.logout()" title="Logout / Switch Role">
             <span class="material-symbols-outlined" style="font-size: 18px;">logout</span>
@@ -526,54 +535,63 @@
       <!-- Content Grid -->
       <div class="field-grid">
         
-        <!-- Left: Quick Action & Patrol Telemetry -->
+        <!-- Left: Prioritized Inspection Task & Telemetry -->
         <div style="display: flex; flex-direction: column; gap: 16px;">
-          <!-- Big Action Card -->
-          <div class="glass-panel" style="padding: 24px; text-align: center; border: 1px solid var(--color-primary);">
-            <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(0, 206, 209, 0.15); border: 1px solid var(--color-primary); display: flex; align-items: center; justify-content: center; margin: 0 auto 14px;">
-              <span class="material-symbols-outlined" style="color: var(--color-primary-bright); font-size: 28px;">add_alert</span>
+          
+          <!-- PRIMARY: My Assigned Inspection Task -->
+          <div class="glass-panel" style="padding: 20px; border: 1px solid #00CED1; background: linear-gradient(135deg, rgba(0, 206, 209, 0.08) 0%, rgba(22, 29, 29, 0.95) 100%);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <span class="label-caps" style="color: #00CED1; letter-spacing: 0.08em;">MY ASSIGNED INSPECTION</span>
+              <span class="badge-status badge-critical">HIGH PRIORITY</span>
             </div>
-            <h2 class="font-display" style="font-size: 20px; color: #FFF; margin-bottom: 6px;">REPORT ROAD HAZARD</h2>
-            <p style="font-size: 13px; color: var(--text-on-surface-variant); margin-bottom: 16px;">
-              Capture live GPS fix, road blockage observation, and photographic evidence for Control Room verification.
-            </p>
-            <button id="btn-open-field-report" class="btn-primary" style="width: 100%; padding: 14px;">
-              <span class="material-symbols-outlined">camera_alt</span> REPORT NEW INCIDENT
-            </button>
-          </div>
-
-          <!-- Patrol Status & Satellite Sync -->
-          <div class="glass-panel" style="padding: 16px;">
-            <span class="label-caps" style="display: block; margin-bottom: 12px;">PATROL TELEMETRY & SYNC</span>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px;">
-              <div>
-                <span style="color: var(--text-on-surface-variant);">Patrol Status:</span>
-                <div style="color: var(--color-primary-bright); font-weight: bold; margin-top: 2px;">Active Patrol (Sector N)</div>
-              </div>
-              <div>
-                <span style="color: var(--text-on-surface-variant);">Battery:</span>
-                <div style="color: #FFF; font-weight: bold; margin-top: 2px;">78% (Nominal)</div>
-              </div>
-              <div>
-                <span style="color: var(--text-on-surface-variant);">Satellite Sync:</span>
-                <div style="color: var(--color-primary); font-weight: bold; margin-top: 2px;">Connected · 2.1s latency</div>
-              </div>
-              <div>
-                <span style="color: var(--text-on-surface-variant);">GPS Fix:</span>
-                <div style="color: #38E54D; font-weight: bold; margin-top: 2px;">LOCKED (±15m)</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Control Room Tasks -->
-          <div class="glass-panel" style="padding: 16px;">
+            
             <div id="field-task-card">
               <!-- Rendered by field-officer.js -->
             </div>
+
             <div style="display: flex; gap: 8px; margin-top: 14px;">
-              <button id="btn-task-ack" class="btn-secondary" style="flex: 1;">ACKNOWLEDGE</button>
-              <button id="btn-task-start" class="btn-secondary" style="flex: 1;">START TASK</button>
-              <button id="btn-task-submit" class="btn-primary" style="flex: 1;">SUBMIT VERIF</button>
+              <button id="btn-task-ack" class="btn-secondary" style="flex: 1; padding: 10px 6px; font-size: 11px;">ACCEPT TASK</button>
+              <button id="btn-task-start" class="btn-secondary" style="flex: 1; padding: 10px 6px; font-size: 11px;">ON SITE</button>
+              <button id="btn-task-submit" class="btn-primary" style="flex: 1; padding: 10px 6px; font-size: 11px;">SUBMIT VERIFICATION</button>
+            </div>
+          </div>
+
+          <!-- Patrol Telemetry (Marked SIMULATION) -->
+          <div class="glass-panel" style="padding: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <span class="label-caps">PATROL TELEMETRY</span>
+              <span class="data-mono" style="font-size: 10px; color: #FFA54A;">SIMULATION MODE</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px;">
+              <div>
+                <span style="color: var(--text-on-surface-variant);">Patrol Sector:</span>
+                <div style="color: var(--color-primary-bright); font-weight: bold; margin-top: 2px;">Velachery Basin (SIMULATED)</div>
+              </div>
+              <div>
+                <span style="color: var(--text-on-surface-variant);">Battery:</span>
+                <div style="color: #FFF; font-weight: bold; margin-top: 2px;">88% (Nominal)</div>
+              </div>
+              <div>
+                <span style="color: var(--text-on-surface-variant);">Radio Network:</span>
+                <div style="color: var(--color-primary); font-weight: bold; margin-top: 2px;">VHF Ch 04 · Sync Active</div>
+              </div>
+              <div>
+                <span style="color: var(--text-on-surface-variant);">GPS Accuracy:</span>
+                <div style="color: #38E54D; font-weight: bold; margin-top: 2px;">LOCKED (±4m · SIMULATED)</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Secondary Action: Report Road Hazard -->
+          <div class="glass-panel" style="padding: 16px; border: 1px solid var(--border-outline);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <span class="label-caps">AD-HOC OBSERVATION</span>
+                <div style="font-size: 13px; color: #FFF; margin-top: 2px;">Report Unmapped Road Hazard</div>
+              </div>
+              <button id="btn-open-field-report" class="btn-secondary" style="padding: 8px 14px; font-size: 11px;">
+                <span class="material-symbols-outlined" style="font-size: 15px;">camera_alt</span> REPORT HAZARD
+              </button>
             </div>
           </div>
         </div>
@@ -582,8 +600,8 @@
         <div style="display: flex; flex-direction: column; gap: 16px;">
           <div class="glass-panel" style="padding: 16px; flex: 1;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-              <span class="label-caps">MY REPORTS & SECTOR INCIDENTS</span>
-              <span class="data-mono" style="font-size: 11px; color: var(--color-primary);">Sector North</span>
+              <span class="label-caps">MY REPORTS & FIELD INCIDENTS</span>
+              <span class="data-mono" style="font-size: 11px; color: var(--color-primary);">Chennai Metro</span>
             </div>
             <div id="field-reports-list" style="display: flex; flex-direction: column; gap: 10px;">
               <!-- Rendered by field-officer.js -->
@@ -606,10 +624,10 @@
         <div class="side-nav-brand">
           <div style="display: flex; align-items: center; gap: 8px;">
             <span class="material-symbols-outlined" style="color: var(--color-primary-bright); font-size: 26px;">alt_route</span>
-            <h2 class="font-display" style="font-size: 20px; font-weight: 700; color: #FFF; letter-spacing: -0.02em;">ROUTE-IQ</h2>
+            <h2 class="font-display" style="font-size: 20px; font-weight: 700; color: #FFF; letter-spacing: -0.02em;">CHENNAI-IQ</h2>
           </div>
           <p class="label-caps" style="color: var(--color-primary); margin-top: 4px;">CONTROL ROOM</p>
-          <p class="data-mono" style="font-size: 11px; color: var(--text-muted);">Sector North</p>
+          <p class="data-mono" style="font-size: 11px; color: var(--text-muted);">Chennai Metro</p>
         </div>
 
         <div class="nav-links">
@@ -700,7 +718,7 @@
                 <div>
                   <div style="display: flex; align-items: center; gap: 8px;">
                     <span class="material-symbols-outlined" style="color: #00CED1; font-size: 20px;">water_drop</span>
-                    <span class="label-caps" style="color: #00CED1; letter-spacing: 0.08em;">NORTHEAST MONSOON RAINFALL SIMULATOR</span>
+                    <span class="label-caps" style="color: #00CED1; letter-spacing: 0.08em;">CHENNAI MONSOON RAINFALL SIMULATOR</span>
                   </div>
                   <div style="font-size: 12px; color: var(--text-on-surface-variant); margin-top: 3px;">
                     Slide or select precipitation to dynamically test citywide risk recalculation, automated task dispatch, and driver rerouting.
@@ -749,14 +767,14 @@
               </div>
 
               <!-- KPI 3 -->
-              <div class="glass-panel kpi-card interactive-glow" onclick="window.RouteIQ.switchCRTab('tab-deliveries')" style="cursor: pointer; border-color: rgba(0, 206, 209, 0.4);">
+              <div class="glass-panel kpi-card interactive-glow" onclick="window.RouteIQ.switchCRTab('tab-incidents')" style="cursor: pointer; border-color: rgba(0, 206, 209, 0.4);">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                  <span class="label-caps">CRITICAL VACCINES</span>
-                  <span class="material-symbols-outlined" style="color: var(--color-primary-bright); font-size: 20px;">medical_services</span>
+                  <span class="label-caps">CRITICAL ROADS</span>
+                  <span class="material-symbols-outlined" style="color: var(--color-primary-bright); font-size: 20px;">traffic</span>
                 </div>
-                <div class="kpi-value" style="color: var(--color-primary-bright);">2</div>
+                <div class="kpi-value" id="kpi-critical-roads" style="color: var(--color-primary-bright);">12</div>
                 <div style="font-size: 11px; color: var(--text-on-surface-variant);">
-                  <strong style="color: #38E54D;">+4.1°C</strong> Cold chain secure
+                  Road segments requiring flood watch
                 </div>
               </div>
 
@@ -787,10 +805,10 @@
               <!-- Left: Live Operations Map -->
               <div class="glass-panel" style="display: flex; flex-direction: column; overflow: hidden; height: 560px;">
                 <div style="padding: 12px 16px; background: var(--bg-input); border-bottom: 1px solid var(--border-outline); display: flex; justify-content: space-between; align-items: center;">
-                  <span class="label-caps">LIVE OPERATIONS MAP · SECTOR NORTH</span>
+                  <span class="label-caps">CHENNAI FLOOD ACCESS RISK MAP · CHENNAI METRO (SIMULATION MODE)</span>
                   <div style="display: flex; gap: 8px;">
                     <button class="btn-secondary" style="padding: 4px 10px; font-size: 10px;" onclick="window.RouteIQ.fitActiveRoute()">FIT ACTIVE ROUTE</button>
-                    <button class="btn-secondary" style="padding: 4px 10px; font-size: 10px;" onclick="window.RouteIQ.centerVehicle()">FOCUS TRK-104</button>
+                    <button class="btn-secondary" style="padding: 4px 10px; font-size: 10px;" onclick="window.RouteIQ.centerVehicle()">FOCUS VEHICLE (TN-01-AB-1042)</button>
                   </div>
                 </div>
                 <div style="flex: 1; position: relative;">
@@ -844,10 +862,10 @@
               <div>
                 <h2 class="font-display" style="font-size: 22px; color: #FFF; display: flex; align-items: center; gap: 10px;">
                   ROUTE INTELLIGENCE
-                  <span class="badge-status badge-verified">TRK-104</span>
+                  <span class="badge-status badge-verified">TN-01-AB-1042</span>
                 </h2>
                 <p style="font-size: 13px; color: var(--text-on-surface-variant); margin-top: 2px;">
-                  Cargo: <span style="color: var(--color-warning);">Life-saving medicines</span> · Destination: Remote Hospital, Sector North
+                  Cargo: <span style="color: var(--color-warning);">Emergency Flood Relief & Dewatering Supplies</span> · Destination: Velachery Emergency Relief Center
                 </p>
               </div>
               <button class="btn-secondary" onclick="alert('Route risk matrices recalculated against latest meteorological radar & active telemetry.')">
@@ -1157,9 +1175,9 @@
             
             <!-- Create Broadcast -->
             <div class="glass-panel" style="padding: 18px;">
-              <span class="label-caps" style="display: block; margin-bottom: 10px; color: var(--color-primary-bright);">TRANSMIT SECTOR EMERGENCY BROADCAST</span>
+              <span class="label-caps" style="display: block; margin-bottom: 10px; color: var(--color-primary-bright);">TRANSMIT EMERGENCY BROADCAST</span>
               <form id="form-emergency-broadcast" style="display: flex; gap: 10px; flex-wrap: wrap;">
-                <input type="text" id="broadcast-title" class="input-control" placeholder="Enter emergency alert message for sector units..." required style="flex: 1; min-width: 260px; background: var(--bg-input); border: 1px solid var(--border-outline); border-radius: var(--radius-sm);" />
+                <input type="text" id="broadcast-title" class="input-control" placeholder="Enter emergency alert message for field units..." required style="flex: 1; min-width: 260px; background: var(--bg-input); border: 1px solid var(--border-outline); border-radius: var(--radius-sm);" />
                 <select id="broadcast-category" class="input-control" style="width: 150px; background: var(--bg-input); border: 1px solid var(--border-outline); border-radius: var(--radius-sm);">
                   <option value="CRITICAL">CRITICAL</option>
                   <option value="HIGH">HIGH</option>
@@ -1174,7 +1192,7 @@
 
             <!-- Alerts List -->
             <div class="glass-panel" style="padding: 18px;">
-              <span class="label-caps" style="display: block; margin-bottom: 14px;">ACTIVE SECTOR BROADCAST LOG</span>
+              <span class="label-caps" style="display: block; margin-bottom: 14px;">ACTIVE EMERGENCY BROADCAST LOG</span>
               <div id="cr-alerts-container" style="display: flex; flex-direction: column; gap: 8px;">
                 <!-- Rendered dynamically by control-room.js -->
               </div>

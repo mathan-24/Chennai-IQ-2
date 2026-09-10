@@ -1,18 +1,18 @@
 /**
- * ROUTE-IQ — Seed Data: Deliveries & Manifests
+ * CHENNAI-IQ — Seed Data: Active Chennai Emergency Response Trips
  */
 export const seedDeliveries = [
   {
-    id: 'MED-EXP-8801',
-    manifestTitle: 'CRITICAL EMERGENCY VACCINES & BLOOD UNITS',
-    cargo: '850kg Temperature-Controlled Biological Supplies',
-    senderFacility: 'Sector North Central Depot',
-    receiverFacility: 'High-Altitude Base Hospital',
-    vehicleId: 'TRK-104',
+    id: 'TRIP-CHN-1042',
+    manifestTitle: 'EMERGENCY FLOOD RELIEF & DEWATERING SUPPLIES',
+    cargo: 'Dewatering pumps, safety rafts & emergency first-aid consignments',
+    senderFacility: 'Guindy Central Logistics Hub',
+    receiverFacility: 'Velachery Emergency Relief Center (Ward 177)',
+    vehicleId: 'TN-01-AB-1042',
     driverName: 'Rajesh Kumar',
     priority: 'HIGH',
-    status: 'NORMAL',
-    eta: '17:45 IST',
-    transitProgressPercent: 42
+    status: 'ACTIVE',
+    eta: '34 min',
+    transitProgressPercent: 40
   }
 ];

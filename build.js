@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-console.log('Building ROUTE-IQ Vanilla Web Application...');
+console.log('Building CHENNAI-IQ Vanilla Web Application...');
 
 const distDir = path.join(__dirname, 'dist');
 const frontendDir = path.join(__dirname, 'frontend');

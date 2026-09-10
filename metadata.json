@@ -1,5 +1,5 @@
 {
-  "name": "ROUTE-IQ",
+  "name": "CHENNAI-IQ",
   "description": "CHENNAI-IQ: AI-Assisted Flood Access Risk Mapping & Dynamic Routing for Chennai",
   "requestFramePermissions": ["geolocation"],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]

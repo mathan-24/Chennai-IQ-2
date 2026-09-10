@@ -1,5 +1,5 @@
 /**
- * ROUTE-IQ — Seed Data: Drivers
+ * CHENNAI-IQ — Seed Data: Drivers
  */
 export const seedDrivers = [
   {
@@ -7,9 +7,9 @@ export const seedDrivers = [
     name: 'Rajesh Kumar',
     license: 'HMV-EXP-99201',
     experienceYears: 14,
-    assignedVehicle: 'TRK-104',
+    assignedVehicle: 'TN-01-AB-1042',
     phone: '+91 98112-44021',
     commsChannel: 'VHF CH 4 (Freq 142.850 MHz)',
-    baseStation: 'Sector North Depot'
+    baseStation: 'Guindy Central Logistics Hub'
   }
 ];

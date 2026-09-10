@@ -1,10 +1,10 @@
 /**
- * ROUTE-IQ — Seed Data: Users
+ * CHENNAI-IQ — Seed Data: Users
  */
 export const seedUsers = [
   {
     id: 'CR-01',
-    email: 'dispatcher@sector-north.gov',
+    email: 'control@chennai-iq.gov',
     name: 'Inspector Ananya Sharma',
     role: 'CONTROL_ROOM',
     unit: 'Command Directorate',
@@ -12,18 +12,18 @@ export const seedUsers = [
   },
   {
     id: 'FO-104',
-    email: 'field104@sector-north.gov',
-    name: 'Sub-Inspector Vikram Singh',
+    email: 'field02@chennai-iq.gov',
+    name: 'Sub-Inspector M. Selvam',
     role: 'FIELD_OFFICER',
-    unit: 'Highway Patrol Unit 4',
+    unit: 'Velachery Recon Unit',
     clearanceLevel: 'LEVEL 2 RECON'
   },
   {
     id: 'DRV-104',
-    email: 'driver104@sector-north.gov',
+    email: 'driver104@chennai-iq.gov',
     name: 'Rajesh Kumar',
     role: 'DRIVER',
-    unit: 'Critical Medical Logistics Fleet',
+    unit: 'Critical Relief Logistics Fleet',
     clearanceLevel: 'LEVEL 1 OPERATOR'
   }
 ];
